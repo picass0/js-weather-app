@@ -43,7 +43,7 @@ class AddCityForm extends Component {
      * displays validation errors
      * @param {string[]} errors
      */
-    dispalyValidationErrors(errors) {
+    displayValidationErrors(errors) {
         this.clear(this.errorBox);
         errors.forEach((error) => {
             const li = document.createElement('li');

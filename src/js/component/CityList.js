@@ -50,7 +50,7 @@ class CityList extends Component{
     addCityHandler (cityName) {
         const validationResult = this.cityNameValidator(cityName);
         if (!validationResult.success) {
-            this.addCityForm.dispalyValidationErrors(validationResult.errors);
+            this.addCityForm.displayValidationErrors(validationResult.errors);
             return;
         }
 
