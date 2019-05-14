@@ -49,7 +49,7 @@ class CitiesState {
 
     removeCity (cityToDelete) {
         if (cityToDelete.id === this.homeCity.id) {
-            throw error('home city cannot be deleted');
+            throw 'home city cannot be deleted';
         }
 
         if (cityToDelete.id === this.activeCity.id) {

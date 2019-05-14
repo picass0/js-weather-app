@@ -3,6 +3,9 @@ import CityComponent from './CityComponent';
 import AddCityForm from './AddCityForm';
 import cityNameValidator from '../validator/cityNameValidator';
 
+/**
+ * todo avoid full rerender in event handlers
+ */
 class CityList extends Component{
 
     /**
@@ -44,7 +47,6 @@ class CityList extends Component{
     }
 
     /**
-     * todo add only one city component to avoid full rerender
      * @param cityName
      */
     addCityHandler (cityName) {
@@ -71,7 +73,6 @@ class CityList extends Component{
     }
 
     /**
-     * todo - delete only one cityComponents to avoid full rerender
      * @param city
      */
     deleteCityHandler (city) {
