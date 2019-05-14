@@ -1,0 +1,23 @@
+import Component from './Component';
+
+
+class WeatherList extends Component{
+
+    render(city, weatherDataCollection) {
+        this.clear();
+
+        const header = document.createElement('h3');
+        header.textContent = `Погода для города ${city.name}:`;
+        this.domContainer.appendChild(header);
+
+        weatherDataCollection.forEach((weatherData) => {
+            const el = document.createElement('div');
+            el.setAttribute('class', 'card');
+            el.textContent = weatherData.temperature;
+            this.domContainer.appendChild(el);
+
+        })
+    }
+}
+
+export default WeatherList;

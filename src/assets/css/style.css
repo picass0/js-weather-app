@@ -1,4 +1,10 @@
 body {
-    background: yellow;
+    background: white;
 }
 
+.card {
+    padding: 3px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
