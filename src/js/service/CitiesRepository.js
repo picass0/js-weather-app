@@ -3,29 +3,25 @@ import CitiesState from '../entity/CitiesState';
 class CitiesRepository {
 
     /**
+     * todo mb make static
+     * todo validation
      * @returns {CitiesState}
      */
     fetchState() {
-        //todo mb make static
-        //todo fetching from local storage
-        //todo validation of cities
+        const jsonString = localStorage.getItem('CitiesState');
 
-        return new CitiesState({
-            cities : [
-                {id: '2', name: 'Izhevsk'},
-                {id: '1', name: 'Moscow'},
-                {id: '3', name: 'Paris'},
-            ],
-            activeCityId: '1',
-            homeCityId: '2'
-        });
+        if (!jsonString) {
+            return null;
+        }
+
+        const parsedJson = JSON.parse(jsonString);
+
+        return new CitiesState(parsedJson);
     }
 
     persisState(state) {
-        //todo saving to local storage
-        console.log('state persisted');
-        console.log(state);
+        localStorage.setItem('CitiesState', state.toJson());
     }
 }
 
-export default CitiesRepository
+export default CitiesRepository;

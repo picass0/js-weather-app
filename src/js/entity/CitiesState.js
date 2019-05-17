@@ -79,6 +79,17 @@ class CitiesState {
     getActiveCity () {
         return this.activeCity;
     }
+
+    /**
+     * @returns {string}
+     */
+    toJson() {
+        return JSON.stringify({
+            cities: this.cities,
+            activeCityId: this.activeCity.id,
+            homeCityId: this.homeCity.id
+        });
+    }
 }
 
 export default CitiesState;
