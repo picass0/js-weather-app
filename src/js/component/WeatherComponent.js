@@ -28,7 +28,8 @@ class WeatherComponent {
 
         this.weatherDataProvider.getDataForCity(city, days)
             .then((weatherList) => {
-                this.weatherList.render(city, weatherList)
+                this.weatherList.render(city, weatherList);
+                this.eventDispatcher.publish('weatherForCityDisplayed', city);
             }).catch((err) => {
                 console.error(err);
                 this.eventDispatcher.publish('cannotDisplayWeatherForCity', city)

@@ -57,7 +57,6 @@ class CityList extends Component{
         }
 
         this.state.addCity({name: cityName});
-        this.render();
         this.eventDispatcher.publish('stateChanged', this.state);
         this.eventDispatcher.publish('activeCityChanged', this.state);
     }
@@ -67,7 +66,6 @@ class CityList extends Component{
      */
     clickCityHandler (city) {
         this.state.setActiveCity(city);
-        this.render();
         this.eventDispatcher.publish('activeCityChanged', this.state);
         this.eventDispatcher.publish('stateChanged', this.state);
     }

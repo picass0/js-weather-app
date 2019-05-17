@@ -52,10 +52,17 @@ dispatcher.subscribe('activeCityChanged', state => {
     weatherComponent.render(state.getActiveCity(), days);
 });
 
+dispatcher.subscribe('cannotDisplayWeatherForCity', city => {
+    cityList.deleteCityHandler(city);
+    console.error('cannot display weather for city ' + city.name);
+});
+dispatcher.subscribe('weatherForCityDisplayed', () => {
+    cityList.render();
+});
+
 /*
  main todo list:
    - constructing initial state via geolocation api
-   - handle cannotDisplayWeatherForCity event
    - caching of weather data
    - styling
    - check if city already exists
