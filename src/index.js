@@ -64,7 +64,8 @@ dispatcher.subscribe('weatherForCityDisplayed', () => {
  main todo list:
    - constructing initial state via geolocation api
    - caching of weather data
-   - styling
+   - styling (and sass + autoprefixers in webpack config)
    - check if city already exists
    - validating that state from localstorage is correct
+   - production config
  */
