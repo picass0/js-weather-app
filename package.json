@@ -21,7 +21,10 @@
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.3.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "promise-polyfill": "8.1.0",
+    "whatwg-fetch": "^3.0.0"
+  },
   "browserslist": [
     "last 2 versions and not IE 10",
     "IE 11",

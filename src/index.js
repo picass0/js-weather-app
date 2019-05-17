@@ -1,28 +1,22 @@
+import 'promise-polyfill/src/polyfill';
+import 'whatwg-fetch';
 import EventDispatcher from './js/service/EventDispatcher';
 import CitiesRepository from './js/service/CitiesRepository';
 import CitiesStateFactory from './js/service/CitiesStateFactory';
 import WeatherDataProvider from './js/service/WeatherDataProvider';
 import WeatherList from './js/component/WeatherList';
-import WeatherService from './js/service/WeatherService';
+import WeatherComponent from './js/component/WeatherComponent';
 import CityList from "./js/component/CityList";
 import cityNameValidator from './js/validator/cityNameValidator';
+import parameters from './parameters.json';
 
-const days = 3;
+
+const days = 4;
 
 
 //initializing services
 const dispatcher = new EventDispatcher(document.body);
 const citiesRepo = new CitiesRepository();
-
-const weatherListComponent = new WeatherList();
-const weatherListDomContainer = document.querySelector('#weather-list');
-weatherListDomContainer.appendChild(weatherListComponent.getDomContainer());
-
-const weatherService = new WeatherService(
-    new WeatherDataProvider(),
-    weatherListComponent,
-    dispatcher
-);
 
 
 //initializing state
@@ -31,7 +25,23 @@ if (!citiesState) {
     const citiesStateFactory = new CitiesStateFactory();
     citiesState = citiesStateFactory.createInitialState();
 }
-weatherService.displayWeatherForCity(citiesState.getActiveCity(), days);
+
+//registering components
+const weatherComponent = new WeatherComponent(
+    new WeatherDataProvider(parameters.apiKey),
+    new WeatherList(),
+    dispatcher,
+);
+const weatherComponentDomContainer = document.querySelector('#weather-list');
+weatherComponentDomContainer.appendChild(weatherComponent.getDomContainer());
+weatherComponent.render(citiesState.getActiveCity(), days);
+
+
+const cityList = new CityList(citiesState, dispatcher, cityNameValidator);
+const cityListParent = document.querySelector('#cities');
+cityListParent.appendChild(cityList.getDomContainer());
+cityList.render();
+
 
 
 //registering event handler(s)
@@ -39,14 +49,14 @@ dispatcher.subscribe('stateChanged', state => {
     citiesRepo.persisState(state);
 });
 dispatcher.subscribe('activeCityChanged', state => {
-    weatherService.displayWeatherForCity(state.getActiveCity(), days);
+    weatherComponent.render(state.getActiveCity(), days);
 });
 
-
-//registering statefull component(s)
-const cityList = new CityList(citiesState, dispatcher, cityNameValidator);
-const cityListParent = document.querySelector('#cities');
-cityListParent.appendChild(cityList.getDomContainer());
-cityList.render();
-
-
+/*
+ main todo list:
+   - saving to local storage
+   - handle cannotDisplayWeatherForCity event
+   - constructing initial state via geolocation api
+   - caching of weather data
+   - styling
+ */
