@@ -54,9 +54,10 @@ dispatcher.subscribe('activeCityChanged', state => {
 
 /*
  main todo list:
-   - saving to local storage
-   - handle cannotDisplayWeatherForCity event
    - constructing initial state via geolocation api
+   - handle cannotDisplayWeatherForCity event
    - caching of weather data
    - styling
+   - check if city already exists
+   - validating that state from localstorage is correct
  */
