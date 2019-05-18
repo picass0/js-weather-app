@@ -43,6 +43,7 @@ if (!citiesState) {
         }
     });
 }
+const weatherDataForCities = {};
 
 
 //registering components
@@ -95,7 +96,12 @@ dispatcher.subscribe('stateChanged', state => {
 });
 
 dispatcher.subscribe('activeCityChanged', state => {
-    weatherComponent.render(state.getActiveCity(), days);
+    const activeCity = state.getActiveCity();
+    let weatherList = null;
+    if (activeCity && weatherDataForCities[activeCity.id]) {
+        weatherList = weatherDataForCities[activeCity.id];
+    }
+    weatherComponent.render(activeCity, days, weatherList);
 });
 
 dispatcher.subscribe('cannotDisplayWeatherForCity', city => {
@@ -105,6 +111,9 @@ dispatcher.subscribe('cannotDisplayWeatherForCity', city => {
     console.error('cannot display weather for city ' + city.name);
 });
 
-dispatcher.subscribe('weatherForCityDisplayed', () => {
+dispatcher.subscribe('weatherForCityDisplayed', (data) => {
+    if (data.city && data.weatherList) {
+        weatherDataForCities[data.city.id] = data.weatherList;
+    }
     cityList.render(citiesState);
 });

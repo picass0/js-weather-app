@@ -17,24 +17,25 @@ class WeatherComponent {
     /**
      * @param {*} city
      * @param {int} days
+     * @param {Array} weatherList
      */
-    render(city, days) {
+    render(city, days, weatherList = null) {
         if (!city) {
             this.weatherList.render(city, []);
-            this.eventDispatcher.publish('weatherForCityDisplayed', city);
+            this.eventDispatcher.publish('weatherForCityDisplayed', {city: city});
             return;
         }
 
-
-        // if (city==='Paris'/*exists in state*/) {
-        //     this.weatherList.render(city, weatherList);
-        //     return;
-        // }
+        if (weatherList) {
+            this.weatherList.render(city, weatherList);
+            this.eventDispatcher.publish('weatherForCityDisplayed', {city: city});
+            return;
+        }
 
         this.weatherDataProvider.getDataForCity(city, days)
             .then((weatherList) => {
                 this.weatherList.render(city, weatherList);
-                this.eventDispatcher.publish('weatherForCityDisplayed', city);
+                this.eventDispatcher.publish('weatherForCityDisplayed', {city: city, weatherList: weatherList});
             }).catch((err) => {
                 console.error(err);
                 this.eventDispatcher.publish('cannotDisplayWeatherForCity', city)
