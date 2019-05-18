@@ -9,7 +9,7 @@ class CityFinder {
         this.geocoder = geocoder;
     }
 
-    findHomeCity() {
+    findCurrentCity() {
         return new Promise((resolve, reject) => {
             try {
                 if (!"geolocation" in navigator) {

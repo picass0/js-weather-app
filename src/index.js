@@ -29,12 +29,12 @@ if (!citiesState) {
         new OpenCageGeocoder(parameters.openCageGeocoderApiKey)
     );
 
-    cityFinder.findHomeCity().then((cityName) => {
+    cityFinder.findCurrentCity().then((currentCityName) => {
         let activeCityChanged = false;
         if (citiesState.getActiveCity() === null) {
             activeCityChanged = true
         }
-        citiesState.addCity({name: cityName}, false);
+        citiesState.addCity({name: currentCityName}, false);
 
         dispatcher.publish('stateChanged', citiesState);
 
