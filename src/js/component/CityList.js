@@ -9,33 +9,31 @@ import cityNameValidator from '../validator/cityNameValidator';
 class CityList extends Component{
 
     /**
-     * @param {CitiesState} citiesState
      * @param {EventDispatcher} eventDispatcher
      * @param {cityNameValidator} cityNameValidator
      */
-    constructor(citiesState, eventDispatcher, cityNameValidator) {
+    constructor(eventDispatcher, cityNameValidator) {
         super();
         this.addCityHandler = this.addCityHandler.bind(this);
         this.deleteCityHandler = this.deleteCityHandler.bind(this);
         this.clickCityHandler = this.clickCityHandler.bind(this);
 
-        this.state = citiesState;
         this.eventDispatcher = eventDispatcher;
         this.cityNameValidator = cityNameValidator;
         this.addCityForm = null;
     }
 
-    render () {
+    render (newState) {
         this.clear();
 
-        this.state.getCities().forEach(cityModel => {
+        newState.getCities().forEach(cityModel => {
             const cityComponent = new CityComponent();
             cityComponent.render(
                 cityModel,
                 this.deleteCityHandler.bind(this, cityModel),
                 this.clickCityHandler.bind(this, cityModel),
-                cityModel.id === this.state.getActiveCity().id,
-                cityModel.id === this.state.getHomeCity().id
+                cityModel.id === newState.getActiveCity().id,
+                cityModel.id === newState.getHomeCity().id
             );
             this.domContainer.appendChild(cityComponent.getDomContainer());
         });
@@ -56,36 +54,27 @@ class CityList extends Component{
             return;
         }
 
-        this.state.addCity({name: cityName});
-        this.eventDispatcher.publish('stateChanged', this.state);
-        this.eventDispatcher.publish('activeCityChanged', this.state);
+        this.eventDispatcher.publish('addCity', {name: cityName});
     }
 
     /**
      * @param city
      */
     clickCityHandler (city) {
-        this.state.setActiveCity(city);
-        this.eventDispatcher.publish('activeCityChanged', this.state);
-        this.eventDispatcher.publish('stateChanged', this.state);
+        this.eventDispatcher.publish('clickCity', city);
     }
 
     /**
      * @param city
      */
     deleteCityHandler (city) {
-        let activeCityDeleted = false;
-        if (this.state.getActiveCity().id === city.id) {
-            activeCityDeleted = true;
-        }
-        this.state.removeCity(city);
-        this.render();
-        this.eventDispatcher.publish('stateChanged', this.state);
+        this.eventDispatcher.publish('deleteCity', city);
 
-        if (activeCityDeleted) {
-            this.eventDispatcher.publish('activeCityChanged', this.state);
-        }
 
+    }
+
+    displayValidationErrors(errors) {
+        this.addCityForm.displayValidationErrors(errors);
     }
 }
 

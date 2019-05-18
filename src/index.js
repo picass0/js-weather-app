@@ -37,27 +37,57 @@ weatherComponentDomContainer.appendChild(weatherComponent.getDomContainer());
 weatherComponent.render(citiesState.getActiveCity(), days);
 
 
-const cityList = new CityList(citiesState, dispatcher, cityNameValidator);
+const cityList = new CityList(dispatcher, cityNameValidator);
 const cityListParent = document.querySelector('#cities');
 cityListParent.appendChild(cityList.getDomContainer());
-cityList.render();
+cityList.render(citiesState);
 
 
 
 //registering event handler(s)
+dispatcher.subscribe('addCity', newCity => {
+    citiesState.addCity(newCity);
+    dispatcher.publish('stateChanged', citiesState);
+    dispatcher.publish('activeCityChanged', citiesState);
+});
+
+dispatcher.subscribe('clickCity', city => {
+    citiesState.setActiveCity(city);
+    dispatcher.publish('activeCityChanged', citiesState);
+    dispatcher.publish('stateChanged', citiesState);
+});
+
+dispatcher.subscribe('deleteCity', city => {
+    let activeCityDeleted = false;
+    if (citiesState.getActiveCity().id === city.id) {
+        activeCityDeleted = true;
+    }
+    citiesState.removeCity(city);
+    dispatcher.publish('stateChanged', citiesState);
+
+    if (activeCityDeleted) {
+        dispatcher.publish('activeCityChanged', citiesState);
+    } else {
+        cityList.render(citiesState);
+    }
+});
+
 dispatcher.subscribe('stateChanged', state => {
     citiesRepo.persisState(state);
 });
+
 dispatcher.subscribe('activeCityChanged', state => {
     weatherComponent.render(state.getActiveCity(), days);
 });
 
 dispatcher.subscribe('cannotDisplayWeatherForCity', city => {
-    cityList.deleteCityHandler(city);
+    citiesState.removeCity(city);
+    cityList.displayValidationErrors(["Не получилось отобразить погоду для города"]);
     console.error('cannot display weather for city ' + city.name);
 });
+
 dispatcher.subscribe('weatherForCityDisplayed', () => {
-    cityList.render();
+    cityList.render(citiesState);
 });
 
 /*
