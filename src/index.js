@@ -2,7 +2,6 @@ import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch';
 import EventDispatcher from './js/service/EventDispatcher';
 import CitiesRepository from './js/service/CitiesRepository';
-import CitiesStateFactory from './js/service/CitiesStateFactory';
 import WeatherDataProvider from './js/service/WeatherDataProvider';
 import WeatherList from './js/component/WeatherList';
 import WeatherComponent from './js/component/WeatherComponent';
@@ -10,6 +9,8 @@ import CityList from "./js/component/CityList";
 import cityNameValidator from './js/validator/cityNameValidator';
 import parameters from './parameters.json';
 import CitiesState from './js/entity/CitiesState';
+import CityFinder from './js/service/CityFinder';
+import OpenCageGeocoder from './js/service/OpenCageGeocoder';
 
 
 const days = 4;
@@ -24,9 +25,25 @@ const citiesRepo = new CitiesRepository();
 let citiesState = citiesRepo.fetchState();
 if (!citiesState) {
     citiesState = new CitiesState();
-    // const citiesStateFactory = new CitiesStateFactory();
-    // citiesState = citiesStateFactory.createEmptyS();
+    const cityFinder = new CityFinder(
+        new OpenCageGeocoder(parameters.openCageGeocoderApiKey)
+    );
+
+    cityFinder.findHomeCity().then((cityName) => {
+        let activeCityChanged = false;
+        if (citiesState.getActiveCity() === null) {
+            activeCityChanged = true
+        }
+        citiesState.addCity({name: cityName}, false);
+
+        dispatcher.publish('stateChanged', citiesState);
+
+        if (activeCityChanged) {
+            dispatcher.publish('activeCityChanged', citiesState);
+        }
+    });
 }
+
 
 //registering components
 const weatherComponent = new WeatherComponent(
@@ -43,7 +60,6 @@ const cityList = new CityList(dispatcher, cityNameValidator);
 const cityListParent = document.querySelector('#cities');
 cityListParent.appendChild(cityList.getDomContainer());
 cityList.render(citiesState);
-
 
 
 //registering event handler(s)
