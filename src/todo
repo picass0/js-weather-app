@@ -1,0 +1,24 @@
+/*
+ main todo list:
+   - constructing initial state via geolocation api
+   - caching of weather data
+   - keep previous active city to avoid jumping, when cannot add city
+   - styling (and sass + autoprefixers in webpack config)
+   - check if city already exists
+   - validating that state from localstorage is correct
+   - production config
+   - do not call changeActiveCity if we clicked on active city
+   - ecentdispatcher can publish events without data
+   - more info about cities
+   - more info about weather
+   - read about getters and setters
+   - correct jsdoc
+   - generate guid for cities ids
+   - citiesState.setActiveCities, cities.removeCity - check if city exists
+   - check in all browsers (ie11)
+
+   - check if city exists for real before adding it
+   - CitiesRepository - validation of state in local storage
+   - smart cities comparison
+   - avoid full rerender in event handlers in cityList
+ */

@@ -89,13 +89,3 @@ dispatcher.subscribe('cannotDisplayWeatherForCity', city => {
 dispatcher.subscribe('weatherForCityDisplayed', () => {
     cityList.render(citiesState);
 });
-
-/*
- main todo list:
-   - constructing initial state via geolocation api
-   - caching of weather data
-   - styling (and sass + autoprefixers in webpack config)
-   - check if city already exists
-   - validating that state from localstorage is correct
-   - production config
- */

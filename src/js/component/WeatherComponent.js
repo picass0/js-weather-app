@@ -1,6 +1,5 @@
 /**
  * aggregates weather handling logic for convenience
- * todo - mb keep weather for city in state and mb cashing
  */
 class WeatherComponent {
 

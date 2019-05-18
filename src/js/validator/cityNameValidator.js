@@ -1,5 +1,4 @@
 /**
- * todo - check if city exists for real
  * @returns {{result: boolean, errors: Array}}
  */
 export default function cityNameValidator(cityName) {

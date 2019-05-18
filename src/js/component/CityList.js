@@ -4,7 +4,7 @@ import AddCityForm from './AddCityForm';
 import cityNameValidator from '../validator/cityNameValidator';
 
 /**
- * todo avoid full rerender in event handlers
+ *
  */
 class CityList extends Component{
 

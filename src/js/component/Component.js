@@ -1,5 +1,4 @@
 /**
- * todo getters/setters
  * abstract parent of all components, should not be instantiated
  */
 class Component {

@@ -27,7 +27,6 @@ class CitiesState {
     addCity (city, isActive = true) {
 
         if (!city.id) {
-            //todo generate guid
             city.id = '' + Math.floor(Math.random()*1000);
         }
 
@@ -43,7 +42,6 @@ class CitiesState {
     }
 
     setActiveCity (activeCity) {
-        //todo check if city exists
         this.activeCity = activeCity;
     }
 

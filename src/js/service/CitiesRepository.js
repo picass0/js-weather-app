@@ -3,8 +3,6 @@ import CitiesState from '../entity/CitiesState';
 class CitiesRepository {
 
     /**
-     * todo mb make static
-     * todo validation
      * @returns {CitiesState}
      */
     fetchState() {
