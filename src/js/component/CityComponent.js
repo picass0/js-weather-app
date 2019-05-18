@@ -7,7 +7,7 @@ class CityComponent extends Component {
         this.domContainer.classList.add('card')
     }
 
-    render (cityModel, deleteHandler, clickHandler, isActiveCity, isHomeCity) {
+    render (cityModel, deleteHandler, clickHandler, isActiveCity) {
         this.clear();
         this.domContainer.addEventListener('click', clickHandler);
 
@@ -19,15 +19,13 @@ class CityComponent extends Component {
             this.domContainer.style.background = 'red';
         }
 
-        if (!isHomeCity) {
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Удалить';
-            deleteButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                deleteHandler(e)
-            });
-            this.domContainer.appendChild(deleteButton);
-        }
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Удалить';
+        deleteButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            deleteHandler(e)
+        });
+        this.domContainer.appendChild(deleteButton);
     }
 }
 

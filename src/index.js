@@ -9,6 +9,7 @@ import WeatherComponent from './js/component/WeatherComponent';
 import CityList from "./js/component/CityList";
 import cityNameValidator from './js/validator/cityNameValidator';
 import parameters from './parameters.json';
+import CitiesState from './js/entity/CitiesState';
 
 
 const days = 4;
@@ -22,8 +23,9 @@ const citiesRepo = new CitiesRepository();
 //initializing state
 let citiesState = citiesRepo.fetchState();
 if (!citiesState) {
-    const citiesStateFactory = new CitiesStateFactory();
-    citiesState = citiesStateFactory.createInitialState();
+    citiesState = new CitiesState();
+    // const citiesStateFactory = new CitiesStateFactory();
+    // citiesState = citiesStateFactory.createEmptyS();
 }
 
 //registering components
@@ -82,6 +84,7 @@ dispatcher.subscribe('activeCityChanged', state => {
 
 dispatcher.subscribe('cannotDisplayWeatherForCity', city => {
     citiesState.removeCity(city);
+    dispatcher.publish('stateChanged', citiesState);
     cityList.displayValidationErrors(["Не получилось отобразить погоду для города"]);
     console.error('cannot display weather for city ' + city.name);
 });

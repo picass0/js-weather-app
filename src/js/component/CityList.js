@@ -32,8 +32,7 @@ class CityList extends Component{
                 cityModel,
                 this.deleteCityHandler.bind(this, cityModel),
                 this.clickCityHandler.bind(this, cityModel),
-                cityModel.id === newState.getActiveCity().id,
-                cityModel.id === newState.getHomeCity().id
+                cityModel.id === newState.getActiveCity().id
             );
             this.domContainer.appendChild(cityComponent.getDomContainer());
         });

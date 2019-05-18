@@ -7,22 +7,23 @@ class CitiesState {
      *
      * @param {Object} rawJsonData
      */
-    constructor(rawJsonData) {
-        this.cities = rawJsonData.cities;
-        this.cities.forEach((city) => {
-            if (city.id === rawJsonData.activeCityId) {
-                this.activeCity = city;
-            }
+    constructor(rawJsonData = null) {
+        this.cities = [];
+        this.activeCity = null;
 
-            if (city.id === rawJsonData.homeCityId) {
-                this.homeCity = city;
-            }
-        });
+        if (rawJsonData !== null) {
+            this.cities = rawJsonData.cities;
+            this.cities.forEach((city) => {
+                if (city.id === rawJsonData.activeCityId) {
+                    this.activeCity = city;
+                }
+            });
+        }
     }
 
     /**
      * @param {Object} city
-     * @param {bool} isActive
+     * @param {boolean} isActive
      */
     addCity (city, isActive = true) {
 
@@ -30,7 +31,7 @@ class CitiesState {
             city.id = '' + Math.floor(Math.random()*1000);
         }
 
-        if (isActive) {
+        if (isActive || this.cities.length === 0) {
             this.activeCity = city;
         }
 
@@ -46,14 +47,6 @@ class CitiesState {
     }
 
     removeCity (cityToDelete) {
-        if (cityToDelete.id === this.homeCity.id) {
-            throw 'home city cannot be deleted';
-        }
-
-        if (cityToDelete.id === this.activeCity.id) {
-            this.activeCity = this.homeCity;
-        }
-
         this.cities.every((city, index) => {
             if (city.id === cityToDelete.id) {
                 this.cities.splice(index, 1);
@@ -61,14 +54,16 @@ class CitiesState {
             }
 
             return true;
-        })
-    }
+        });
 
-    /**
-     * @returns {*}
-     */
-    getHomeCity () {
-        return this.homeCity;
+        if (cityToDelete.id === this.activeCity.id) {
+            let newActiveCity = null;
+            if (this.cities[0]) {
+                newActiveCity = this.cities[0];
+            }
+
+            this.activeCity = newActiveCity;
+        }
     }
 
     /**
@@ -84,8 +79,7 @@ class CitiesState {
     toJson() {
         return JSON.stringify({
             cities: this.cities,
-            activeCityId: this.activeCity.id,
-            homeCityId: this.homeCity.id
+            activeCityId: !!this.activeCity ? this.activeCity.id : null
         });
     }
 }

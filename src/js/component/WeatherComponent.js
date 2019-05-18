@@ -12,7 +12,6 @@ class WeatherComponent {
         this.weatherDataProvider = weatherDataProvider;
         this.weatherList = weatherList;
         this.eventDispatcher = eventDispatcher;
-        this.state = {};
     }
 
     /**
@@ -20,6 +19,13 @@ class WeatherComponent {
      * @param {int} days
      */
     render(city, days) {
+        if (!city) {
+            this.weatherList.render(city, []);
+            this.eventDispatcher.publish('weatherForCityDisplayed', city);
+            return;
+        }
+
+
         // if (city==='Paris'/*exists in state*/) {
         //     this.weatherList.render(city, weatherList);
         //     return;

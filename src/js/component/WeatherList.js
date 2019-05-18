@@ -6,6 +6,10 @@ class WeatherList extends Component{
     render(city, weatherDataCollection) {
         this.clear();
 
+        if (!city) {
+            return;
+        }
+
         const header = document.createElement('h3');
         header.textContent = `Погода для города ${city.name}:`;
         this.domContainer.appendChild(header);
