@@ -1,24 +1,37 @@
 /*
  main todo list:
-   - constructing initial state via geolocation api
-   - caching of weather data
-   - keep previous active city to avoid jumping, when cannot add city
-   - styling (and sass + autoprefixers in webpack config)
-   - check if city already exists
-   - validating that state from localstorage is correct
+
+   - more info about weather
+
+
+
+   - move days to parameters, better naming of parameters
+
+   - check if city exists  before adding it
+   - cityfinder rename
+   - display moscow if no city selected
    - production config
    - do not call changeActiveCity if we clicked on active city
-   - ecentdispatcher can publish events without data
-   - more info about cities
-   - more info about weather
+   - eventdispatcher can publish events without data
    - read about getters and setters
    - correct jsdoc
-   - generate guid for cities ids
    - citiesState.setActiveCities, cities.removeCity - check if city exists
    - check in all browsers (ie11)
+   - separate class for city
+   - styling (and sass + autoprefixers in webpack config)
+   - add readme.md
+   - toy with async+await
+   - publish state related events in citiesState object
+   - describe json data via json schema
 
-   - check if city exists for real before adding it
-   - CitiesRepository - validation of state in local storage
+   - different component for current day
+   - ability to change days at runtime
+   - ability to add current city after user declined to provide geolocation info
+   - autocomplete field for cities
+   - add class properties and babel plugin for them
+   - read about strict mode and mb use it
+   - add current location as additional bonus
+   - CitiesRepository - validation of state in local storage, + keep version of state + describe data sent to data storage
    - smart cities comparison
    - avoid full rerender in event handlers in cityList
  */
