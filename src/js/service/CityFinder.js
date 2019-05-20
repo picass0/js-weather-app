@@ -18,7 +18,7 @@ class CityFinder {
 
                 navigator.geolocation.getCurrentPosition((position) => {
                     return this.geocoder
-                        .getCityNameFromCoordinates(position.coords.latitude, position.coords.longitude)
+                        .getCityFromCoordinates(position.coords.latitude, position.coords.longitude)
                         .then(resolve);
                 }, this.errorHandler);
             } catch (e) {

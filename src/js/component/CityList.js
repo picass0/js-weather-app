@@ -32,7 +32,7 @@ class CityList extends Component{
                 cityModel,
                 this.deleteCityHandler.bind(this, cityModel),
                 this.clickCityHandler.bind(this, cityModel),
-                cityModel.id === newState.getActiveCity().id
+                cityModel.getId() === newState.getActiveCity().getId()
             );
             this.domContainer.appendChild(cityComponent.getDomContainer());
         });
@@ -53,7 +53,7 @@ class CityList extends Component{
             return;
         }
 
-        this.eventDispatcher.publish('addCity', {name: cityName});
+        this.eventDispatcher.publish('addCity', cityName);
     }
 
     /**

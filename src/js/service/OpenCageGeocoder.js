@@ -1,17 +1,42 @@
-import {propertyExists} from "../utils/utils";
+import City from "../entity/City";
 
 /**
  * https://opencagedata.com/api
  */
 class OpenCageGeocoder {
 
+    /**
+     *
+     * @param {string} apiKey
+     */
     constructor (apiKey) {
         this.url = 'https://api.opencagedata.com/geocode/v1/json';
         this.apiKey = apiKey;
     }
 
-    getCityNameFromCoordinates(lat, lng) {
-        const url = `${this.url}?q=${lat}+${lng}&key=${this.apiKey}&language=ru`;
+    /**
+     * @param {string} cityName
+     * @returns {Promise}
+     */
+    getCityFromName (cityName) {
+        return this.createCityQuery(cityName);
+    }
+
+    /**
+     * @param {number} lat
+     * @param {number} lng
+     * @returns {Promise}
+     */
+    getCityFromCoordinates(lat, lng) {
+        return this.createCityQuery(`${lat} + ${lng}`);
+    }
+
+    /**
+     * @param query
+     * @returns {Promise}
+     */
+    createCityQuery(query) {
+        const url = `${this.url}?q=${query}&key=${this.apiKey}&language=ru`;
         return fetch(url)
             .then((response) => {
                 if (!response.ok) {
@@ -26,11 +51,26 @@ class OpenCageGeocoder {
 
                 const result = response.results[0];
 
-                if (!propertyExists(result, 'components', 'city') || !result.components.city) {
-                    throw {msg: "response.results[0].components.city string should be present in response, and it should not be empty", response: response};
-                }
+                 if (!result.hasOwnProperty('components')) {
+                     throw {msg:"response.results[0].components should be present in response", response: response};
+                 }
 
-                return result.components.city;
+                 const components = result.components;
+
+                 const city = components.city || null;
+                 const state = components.state || null;
+                 const country = components.country || null;
+
+                 if (!city || (!state && !country)) {
+                     throw {msg: "not enough information in response.results[0].components object", response: response};
+                 }
+
+
+                return new City({
+                    state: result.components.state,
+                    name: result.components.city,
+                    country: result.components.country
+                });
             });
     }
 }

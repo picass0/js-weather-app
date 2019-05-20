@@ -18,7 +18,8 @@ class CitiesRepository {
     }
 
     persisState(state) {
-        localStorage.setItem('CitiesState', state.toJson());
+        const json = state.toJson();
+        localStorage.setItem('CitiesState', JSON.stringify(json));
     }
 }
 

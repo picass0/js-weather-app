@@ -1,3 +1,5 @@
+import City from './City';
+
 /**
  * Object holds application state related to cities
  */
@@ -12,7 +14,7 @@ class CitiesState {
         this.activeCity = null;
 
         if (rawJsonData !== null) {
-            this.cities = rawJsonData.cities;
+            this.cities = rawJsonData.cities.map(rawCity => new City(rawCity));
             this.cities.forEach((city) => {
                 if (city.id === rawJsonData.activeCityId) {
                     this.activeCity = city;
@@ -26,11 +28,6 @@ class CitiesState {
      * @param {boolean} isActive
      */
     addCity (city, isActive = true) {
-
-        if (!city.id) {
-            city.id = '' + Math.floor(Math.random()*1000);
-        }
-
         if (isActive || this.cities.length === 0) {
             this.activeCity = city;
         }
@@ -77,10 +74,10 @@ class CitiesState {
      * @returns {string}
      */
     toJson() {
-        return JSON.stringify({
-            cities: this.cities,
+        return {
+            cities: this.cities.map((city) => city.toJson()),
             activeCityId: !!this.activeCity ? this.activeCity.id : null
-        });
+        };
     }
 }
 

@@ -17,7 +17,7 @@ class EventDispatcher {
      * subscribe to event
      *
      * @param {string} eventType
-     * @param {function(Object)} handler
+     * @param {function(*)} handler
      */
     subscribe(eventType, handler) {
         this.domElement.addEventListener(eventType, event => {

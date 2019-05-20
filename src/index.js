@@ -19,22 +19,20 @@ const days = 4;
 //initializing services
 const dispatcher = new EventDispatcher(document.body);
 const citiesRepo = new CitiesRepository();
-
+const geocoder = new OpenCageGeocoder(parameters.openCageGeocoderApiKey);
 
 //initializing state
 let citiesState = citiesRepo.fetchState();
 if (!citiesState) {
     citiesState = new CitiesState();
-    const cityFinder = new CityFinder(
-        new OpenCageGeocoder(parameters.openCageGeocoderApiKey)
-    );
+    const cityFinder = new CityFinder(geocoder);
 
-    cityFinder.findCurrentCity().then((currentCityName) => {
+    cityFinder.findCurrentCity().then((city) => {
         let activeCityChanged = false;
         if (citiesState.getActiveCity() === null) {
             activeCityChanged = true
         }
-        citiesState.addCity({name: currentCityName}, false);
+        citiesState.addCity(city, false);
 
         dispatcher.publish('stateChanged', citiesState);
 
@@ -64,10 +62,18 @@ cityList.render(citiesState);
 
 
 //registering event handler(s)
-dispatcher.subscribe('addCity', newCity => {
-    citiesState.addCity(newCity);
-    dispatcher.publish('stateChanged', citiesState);
-    dispatcher.publish('activeCityChanged', citiesState);
+dispatcher.subscribe('addCity', newCityName => {
+    geocoder.getCityFromName(newCityName)
+        .then((newCity) => {
+            citiesState.addCity(newCity);
+            dispatcher.publish('stateChanged', citiesState);
+            dispatcher.publish('activeCityChanged', citiesState);
+        })
+        .catch((e) => {
+            console.error(e);
+            cityList.displayValidationErrors(['Не удалось найти город с переданным именем']);
+        });
+
 });
 
 dispatcher.subscribe('clickCity', city => {
