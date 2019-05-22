@@ -21,10 +21,12 @@ class CityList extends Component{
         this.eventDispatcher = eventDispatcher;
         this.cityNameValidator = cityNameValidator;
         this.addCityForm = null;
+        this.cityBeingAdded = false;
     }
 
     render (newState) {
         this.clear();
+        this.cityBeingAdded = false;
 
         newState.getCities().forEach(cityModel => {
             const cityComponent = new CityComponent();
@@ -52,8 +54,22 @@ class CityList extends Component{
             this.addCityForm.displayValidationErrors(validationResult.errors);
             return;
         }
-
+        this.cityBeingAdded = true;
         this.eventDispatcher.publish('addCity', cityName);
+    }
+
+    /**
+     * @returns {null|string}
+     */
+    isCityBeingAdded () {
+        return this.cityBeingAdded;
+    }
+
+    /**
+     * @param {boolean} cityBeingAdded
+     */
+    setCityBeingAdded (cityBeingAdded) {
+        this.cityBeingAdded = cityBeingAdded
     }
 
     /**

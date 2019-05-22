@@ -11,6 +11,7 @@ import parameters from './parameters.json';
 import CitiesState from './js/entity/CitiesState';
 import CityFinder from './js/service/CityFinder';
 import OpenCageGeocoder from './js/service/OpenCageGeocoder';
+import FlashComponent from './js/component/FlashComponent';
 
 
 const days = 4;
@@ -60,6 +61,10 @@ const cityListParent = document.querySelector('#cities');
 cityListParent.appendChild(cityList.getDomContainer());
 cityList.render(citiesState);
 
+const flashComponent = new FlashComponent();
+const flashComponentDomContainer = document.body;
+flashComponentDomContainer.appendChild(flashComponent.getDomContainer());
+
 
 //registering event handler(s)
 dispatcher.subscribe('addCity', newCityName => {
@@ -104,8 +109,8 @@ dispatcher.subscribe('stateChanged', state => {
 dispatcher.subscribe('activeCityChanged', state => {
     const activeCity = state.getActiveCity();
     let weatherList = null;
-    if (activeCity && weatherDataForCities[activeCity.id]) {
-        weatherList = weatherDataForCities[activeCity.id];
+    if (activeCity && weatherDataForCities[activeCity.getId()]) {
+        weatherList = weatherDataForCities[activeCity.getId()];
     }
     weatherComponent.render(activeCity, days, weatherList);
 });
@@ -113,7 +118,14 @@ dispatcher.subscribe('activeCityChanged', state => {
 dispatcher.subscribe('cannotDisplayWeatherForCity', city => {
     citiesState.removeCity(city);
     dispatcher.publish('stateChanged', citiesState);
-    cityList.displayValidationErrors(["Не получилось отобразить погоду для города"]);
+    const message = ["Не получилось отобразить погоду для города " + city.getName()];
+    if (cityList.isCityBeingAdded()) {
+        cityList.displayValidationErrors(message);
+        cityList.setCityBeingAdded(false);
+    } else {
+        flashComponent.render(message);
+        cityList.render(citiesState);
+    }
     console.error('cannot display weather for city ' + city.name);
 });
 

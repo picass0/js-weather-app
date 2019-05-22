@@ -18,6 +18,10 @@ class City {
         };
     }
 
+    getName() {
+        return this.name;
+    }
+
     getId() {
         return this.id;
     }
