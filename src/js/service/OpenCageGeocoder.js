@@ -57,7 +57,15 @@ class OpenCageGeocoder {
 
                  const components = result.components;
 
-                 const city = components.city || null;
+                 let city = components.city || null;
+                 if (!city && components.town) {
+                     city = components.town;
+                 }
+
+                 if (!city && components.village) {
+                     city = components.village;
+                 }
+
                  const state = components.state || null;
                  const country = components.country || null;
 
@@ -67,9 +75,9 @@ class OpenCageGeocoder {
 
 
                 return new City({
-                    state: result.components.state,
-                    name: result.components.city,
-                    country: result.components.country
+                    state: state,
+                    name: city,
+                    country: country
                 });
             });
     }
