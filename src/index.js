@@ -30,10 +30,10 @@ if (!globalState) {
 
     cityFinder.findCurrentCity()
         .then((city) => {
-            const defaultCity = globalState.getDefaultCity();
             let state = globalState;
+            const defaultCity = globalState.getDefaultCity();
             if (defaultCity) {
-                state =  CitiesStateFactory.removeCity(state, defaultCity);
+                state = CitiesStateFactory.removeCity(state, defaultCity);
             }
 
             let activeCityChanged = false;
@@ -80,6 +80,7 @@ dispatcher.subscribe('addCity', newCityName => {
             if (globalState.cityExists(newCity)) {
                 throw {messageForUser: 'город уже есть в списке'};
             }
+
             const newState = CitiesStateFactory.addCity(globalState, newCity);
             dispatcher.publish('displayWeatherForActiveCity', newState);
         })
