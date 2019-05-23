@@ -17,7 +17,7 @@ class WeatherDataProvider {
      * @returns {Promise}
      */
     getDataForCity(city, days) {
-        const url = `${this.url}?key=${this.apiKey}&q=${city.name}&days=${days}`;
+        const url = `${this.url}?key=${this.apiKey}&q=${city.name}&days=${days}&lang=ru`;
         return fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -34,15 +34,44 @@ class WeatherDataProvider {
                 const forecast = response.forecast.forecastday;
 
                 const dailyWeatherCollection = forecast.map(rawForecast => {
-                    if (!propertyExists(rawForecast, 'day', 'avgtemp_c')) {
-                        throw {
-                            msg: "cannot display weather data, undexpected response format, cannot find forecast.forecastday.day.avgtemp_c value",
-                            response: response,
-                            forecast: rawForecast
-                        };
+                    if (!rawForecast.hasOwnProperty('date')) {
+                        throw {msg: "cannot display weather data, no forecast.forecastday.date parameter in response", response}
                     }
 
-                    return new DailyWeather(rawForecast.day.avgtemp_c);
+                    const date = new Date(rawForecast.date);
+
+                    if (!rawForecast.hasOwnProperty('day')) {
+                        throw {msg: "cannot display weather data, no forecast.forecastday.day parameter in response", response: response, forecast: rawForecast};
+                    }
+
+                    const day = rawForecast.day;
+
+                    if (!day.hasOwnProperty('maxtemp_c')) {
+                        throw {msg: "cannot display weather data, undexpected response format, cannot find forecast.forecastday.day.maxtemp_c value", response: response, forecast: rawForecast};
+                    }
+
+                    let description = null;
+                    let icon = null;
+                    if (day.condition) {
+                        description = day.condition.text;
+                        icon = day.condition.icon;
+                    }
+
+                    let wind = null;
+                    if (day.hasOwnProperty('maxwind_kph')) {
+                        wind = parseFloat(day.maxwind_kph)*1000/3600;
+                    }
+
+                    return new DailyWeather({
+                        date: date,
+                        maxTemperature: day.maxtemp_c,
+                        icon: icon,
+                        description: description,
+                        minTemperature: day.mintemp_c || null,
+                        precipitation: day.totalprecip_mm || null,
+                        humidity: day.avghumidity || null,
+                        wind: wind
+                    });
                 });
 
                 return dailyWeatherCollection;
