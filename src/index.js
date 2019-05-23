@@ -13,9 +13,7 @@ import CityFinder from './js/service/CityFinder';
 import OpenCageGeocoder from './js/service/OpenCageGeocoder';
 import FlashComponent from './js/component/FlashComponent';
 import CitiesStateFactory from './js/service/CitiesStateFactory';
-
-
-const days = 4;
+import City from "./js/entity/City";
 
 
 //initializing services
@@ -26,22 +24,31 @@ const geocoder = new OpenCageGeocoder(parameters.openCageGeocoderApiKey);
 //initializing state
 let globalState = citiesRepo.fetchState();
 if (!globalState) {
-    globalState = new CitiesState();
+    const defaultCity = new City(parameters.defaultCity);
+    globalState = new CitiesState([defaultCity], defaultCity, defaultCity);
     const cityFinder = new CityFinder(geocoder);
 
-    cityFinder.findCurrentCity().then((city) => {
-        let activeCityChanged = false;
-        if (globalState.getActiveCity() === null) {
-            activeCityChanged = true
-        }
-        const newState = CitiesStateFactory.addCity(globalState, city, false);
+    cityFinder.findCurrentCity()
+        .then((city) => {
+            const defaultCity = globalState.getDefaultCity();
+            let state = globalState;
+            if (defaultCity) {
+                state =  CitiesStateFactory.removeCity(state, defaultCity);
+            }
 
-        dispatcher.publish('stateChanged', newState);
+            let activeCityChanged = false;
+            if (state.getActiveCity() === null) {
+                activeCityChanged = true
+            }
 
-        if (activeCityChanged) {
-            dispatcher.publish('displayWeatherForActiveCity', newState);
-        }
-    });
+            const newState = CitiesStateFactory.addCity(state, city, false);
+
+            dispatcher.publish('stateChanged', newState);
+
+            if (activeCityChanged) {
+                dispatcher.publish('displayWeatherForActiveCity', newState);
+            }
+        });
 }
 const weatherDataForCities = {};
 
@@ -53,7 +60,7 @@ const weatherComponent = new WeatherComponent(
 );
 const weatherComponentDomContainer = document.querySelector('#weather-list');
 weatherComponentDomContainer.appendChild(weatherComponent.getDomContainer());
-weatherComponent.render(globalState.getActiveCity(), days);
+weatherComponent.render(globalState.getActiveCity(), parameters.days);
 
 
 const cityList = new CityList(dispatcher, cityNameValidator);
@@ -112,7 +119,7 @@ dispatcher.subscribe('displayWeatherForActiveCity', state => {
     if (activeCity && weatherDataForCities[activeCity.getId()]) {
         weatherList = weatherDataForCities[activeCity.getId()];
     }
-    weatherComponent.render(activeCity, days, weatherList)
+    weatherComponent.render(activeCity, parameters.days, weatherList)
         .then((weatherList) => {
             dispatcher.publish('weatherForCityDisplayed', {citiesState: state, weatherList: weatherList});
         })

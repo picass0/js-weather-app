@@ -1,4 +1,9 @@
 {
   "apiKey": "key",
-  "openCageGeocoderApiKey": "key"
+  "openCageGeocoderApiKey": "key",
+  "defaultCity": {
+    "name": "Москва",
+    "state": "Москва",
+    "country": "РФ"
+  }
 }

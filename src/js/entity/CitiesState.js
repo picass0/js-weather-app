@@ -8,9 +8,10 @@ class CitiesState {
     /**
      *
      */
-    constructor(cities = [], activeCity = null) {
+    constructor(cities = [], activeCity = null, defaultCity = null) {
         this.cities = cities;
         this.activeCity = activeCity;
+        this.defaultCity = defaultCity;
     }
 
     getCities () {
@@ -26,6 +27,13 @@ class CitiesState {
         });
 
         return result;
+    }
+
+    /*
+     * @returns {City}
+     */
+    getDefaultCity () {
+        return this.defaultCity;
     }
 
     /**
