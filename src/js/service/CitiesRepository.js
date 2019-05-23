@@ -1,4 +1,5 @@
 import CitiesState from '../entity/CitiesState';
+import CitiesStateFactory from './CitiesStateFactory';
 
 class CitiesRepository {
 
@@ -14,7 +15,7 @@ class CitiesRepository {
 
         const parsedJson = JSON.parse(jsonString);
 
-        return new CitiesState(parsedJson);
+        return CitiesStateFactory.createFromRawJson(parsedJson);
     }
 
     persisState(state) {

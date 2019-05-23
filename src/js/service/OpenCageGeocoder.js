@@ -61,7 +61,7 @@ class OpenCageGeocoder {
                  const state = components.state || null;
                  const country = components.country || null;
 
-                 if (!city || (!state && !country)) {
+                 if (!country || (!state && !city)) {
                      throw {msg: "not enough information in response.results[0].components object", response: response};
                  }
 

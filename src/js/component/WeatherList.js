@@ -11,7 +11,7 @@ class WeatherList extends Component{
         }
 
         const header = document.createElement('h3');
-        header.textContent = `Погода для города ${city.name}:`;
+        header.textContent = `Погода для города ${city.getNameOrStateIfNotExists()}:`;
         this.domContainer.appendChild(header);
 
         weatherDataCollection.forEach((weatherData) => {

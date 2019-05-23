@@ -19,15 +19,15 @@ class CityComponent extends Component {
         this.domContainer.addEventListener('click', clickHandler);
 
         const cityName = document.createElement('h3');
-        cityName.textContent = cityModel.name;
+        cityName.textContent = cityModel.getName();
         this.domContainer.appendChild(cityName);
 
         const cityState = document.createElement('p');
-        cityState.textContent = cityModel.state;
+        cityState.textContent = cityModel.getState();
         this.domContainer.appendChild(cityState);
 
         const cityCountry = document.createElement('p');
-        cityCountry.textContent = cityModel.country;
+        cityCountry.textContent = cityModel.getCountry();
         this.domContainer.appendChild(cityCountry);
 
         if (isActiveCity) {

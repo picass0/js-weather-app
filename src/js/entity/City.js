@@ -4,10 +4,11 @@ class City {
      * param {*} rawJsonData
      */
     constructor (rawJsonData) {
-        this.id = rawJsonData.name + rawJsonData.state + rawJsonData.country;
-        this.name = rawJsonData.name;
-        this.state = rawJsonData.state;
-        this.country = rawJsonData.country;
+        this.name = rawJsonData.name || null;
+        this.state = rawJsonData.state || null;
+        this.country = rawJsonData.country || null;
+
+        this.id = (this.name ? this.name : '') + (this.state ? this.state : '') + (this.country ? this.country : '');
     }
 
     toJson () {
@@ -18,12 +19,24 @@ class City {
         };
     }
 
-    getName() {
+    getCountry () {
+        return this.country;
+    }
+
+    getState () {
+        return this.state;
+    }
+
+    getName () {
         return this.name;
     }
 
     getId() {
         return this.id;
+    }
+
+    getNameOrStateIfNotExists() {
+        return !!this.name ? this.name : this.state;
     }
 
 }

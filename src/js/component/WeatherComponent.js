@@ -6,12 +6,10 @@ class WeatherComponent {
     /**
      * @param {WeatherDataProvider} weatherDataProvider
      * @param {WeatherList} weatherList
-     * @param {EventDispatcher} eventDispatcher
      */
-    constructor (weatherDataProvider, weatherList, eventDispatcher) {
+    constructor (weatherDataProvider, weatherList) {
         this.weatherDataProvider = weatherDataProvider;
         this.weatherList = weatherList;
-        this.eventDispatcher = eventDispatcher;
     }
 
     /**
@@ -21,24 +19,26 @@ class WeatherComponent {
      */
     render(city, days, weatherList = null) {
         if (!city) {
-            this.weatherList.render(city, []);
-            this.eventDispatcher.publish('weatherForCityDisplayed', {city: city});
-            return;
+            return new Promise((resolve, reject) => {
+                this.weatherList.render(city, []);
+                resolve([]);
+            });
         }
 
         if (weatherList) {
-            this.weatherList.render(city, weatherList);
-            this.eventDispatcher.publish('weatherForCityDisplayed', {city: city});
-            return;
+            return new Promise((resolve, reject) => {
+                this.weatherList.render(city, weatherList);
+                resolve([]);
+            });
         }
 
-        this.weatherDataProvider.getDataForCity(city, days)
+        return this.weatherDataProvider.getDataForCity(city, days)
             .then((weatherList) => {
                 this.weatherList.render(city, weatherList);
-                this.eventDispatcher.publish('weatherForCityDisplayed', {city: city, weatherList: weatherList});
+                return weatherList;
             }).catch((err) => {
                 console.error(err);
-                this.eventDispatcher.publish('cannotDisplayWeatherForCity', city)
+                throw err;
             });
     }
 

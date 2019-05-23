@@ -24,31 +24,29 @@ class WeatherDataProvider {
                     throw response;
                 }
                 return response.json()
-            }).then(this.handleResponse);
-    }
+            }).then((response) => {
+                if (!propertyExists(response, 'forecast', 'forecastday') ||
+                    !Array.isArray(response.forecast.forecastday)
+                ) {
+                    throw {msg: "cannot display weather data, unexpected response format, cannot find foreacast.forecastday array", response: response};
+                }
 
-    handleResponse(response) {
-        if (!propertyExists(response, 'forecast', 'forecastday') ||
-            !Array.isArray(response.forecast.forecastday)
-        ) {
-            throw {msg: "cannot display weather data, unexpected response format, cannot find foreacast.forecastday array", response: response};
-        }
+                const forecast = response.forecast.forecastday;
 
-        const forecast = response.forecast.forecastday;
+                const dailyWeatherCollection = forecast.map(rawForecast => {
+                    if (!propertyExists(rawForecast, 'day', 'avgtemp_c')) {
+                        throw {
+                            msg: "cannot display weather data, undexpected response format, cannot find forecast.forecastday.day.avgtemp_c value",
+                            response: response,
+                            forecast: rawForecast
+                        };
+                    }
 
-        const dailyWeatherCollection = forecast.map(rawForecast => {
-            if (!propertyExists(rawForecast, 'day', 'avgtemp_c')) {
-                throw {
-                    msg: "cannot display weather data, undexpected response format, cannot find forecast.forecastday.day.avgtemp_c value",
-                    response: response,
-                    forecast: rawForecast
-                };
-            }
+                    return new DailyWeather(rawForecast.day.avgtemp_c);
+                });
 
-            return new DailyWeather(rawForecast.day.avgtemp_c);
-        });
-
-        return dailyWeatherCollection;
+                return dailyWeatherCollection;
+            });
     }
 }
 
