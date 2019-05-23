@@ -1,15 +1,24 @@
 /**
  * aggregates weather handling logic for convenience
  */
-class WeatherComponent {
+import Component from "./Component";
+import WeatherList from "./WeatherList";
+import WheelPlaceholder from "./WheelPlaceholder";
+
+class WeatherComponent extends Component{
 
     /**
+     * @param container
      * @param {WeatherDataProvider} weatherDataProvider
-     * @param {WeatherList} weatherList
      */
-    constructor (weatherDataProvider, weatherList) {
+    constructor (container, weatherDataProvider) {
+        super(container);
         this.weatherDataProvider = weatherDataProvider;
-        this.weatherList = weatherList;
+        this.weatherList = new WeatherList();
+        this.wheel = new WheelPlaceholder();
+
+        this.getDomContainer().appendChild(this.weatherList.getDomContainer());
+        this.getDomContainer().appendChild(this.wheel.getDomContainer());
     }
 
     /**
@@ -32,18 +41,19 @@ class WeatherComponent {
             });
         }
 
+        this.weatherList.clear();
+        this.wheel.render();
+
         return this.weatherDataProvider.getDataForCity(city, days)
             .then((weatherList) => {
+                this.wheel.clear();
                 this.weatherList.render(city, weatherList);
                 return weatherList;
             }).catch((err) => {
+                this.wheel.clear();
                 console.error(err);
                 throw err;
             });
-    }
-
-    getDomContainer () {
-        return this.weatherList.getDomContainer();
     }
 }
 

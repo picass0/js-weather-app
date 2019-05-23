@@ -3,7 +3,6 @@ import 'whatwg-fetch';
 import EventDispatcher from './js/service/EventDispatcher';
 import CitiesRepository from './js/service/CitiesRepository';
 import WeatherDataProvider from './js/service/WeatherDataProvider';
-import WeatherList from './js/component/WeatherList';
 import WeatherComponent from './js/component/WeatherComponent';
 import CityList from "./js/component/CityList";
 import cityNameValidator from './js/validator/cityNameValidator';
@@ -54,12 +53,11 @@ const weatherDataForCities = {};
 
 
 //registering components
-const weatherComponent = new WeatherComponent(
-    new WeatherDataProvider(parameters.apiKey),
-    new WeatherList()
-);
 const weatherComponentDomContainer = document.querySelector('#weather-list');
-weatherComponentDomContainer.appendChild(weatherComponent.getDomContainer());
+const weatherComponent = new WeatherComponent(
+    weatherComponentDomContainer,
+    new WeatherDataProvider(parameters.apiKey),
+);
 weatherComponent.render(globalState.getActiveCity(), parameters.days);
 
 

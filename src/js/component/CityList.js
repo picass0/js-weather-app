@@ -2,6 +2,7 @@ import Component from './Component';
 import CityComponent from './CityComponent';
 import AddCityForm from './AddCityForm';
 import cityNameValidator from '../validator/cityNameValidator';
+import WheelPlaceholder from "./WheelPlaceholder";
 
 /**
  *
@@ -21,6 +22,7 @@ class CityList extends Component{
         this.eventDispatcher = eventDispatcher;
         this.cityNameValidator = cityNameValidator;
         this.addCityForm = null;
+        this.wheel = null;
         this.cityBeingAdded = false;
     }
 
@@ -39,6 +41,10 @@ class CityList extends Component{
             this.domContainer.appendChild(cityComponent.getDomContainer());
         });
 
+        const wheel = new WheelPlaceholder();
+        this.domContainer.appendChild(wheel.getDomContainer());
+        this.wheel = wheel;
+
         const addCityForm = new AddCityForm();
         this.domContainer.appendChild(addCityForm.getDomContainer());
         addCityForm.render(this.addCityHandler);
@@ -55,6 +61,7 @@ class CityList extends Component{
             return;
         }
         this.cityBeingAdded = true;
+        this.wheel.render();
         this.eventDispatcher.publish('addCity', cityName);
     }
 
@@ -70,6 +77,9 @@ class CityList extends Component{
      */
     setCityBeingAdded (cityBeingAdded) {
         this.cityBeingAdded = cityBeingAdded
+        if (!cityBeingAdded) {
+            this.wheel.clear();
+        }
     }
 
     /**
@@ -90,6 +100,7 @@ class CityList extends Component{
 
     displayValidationErrors(errors) {
         this.addCityForm.displayValidationErrors(errors);
+        this.wheel.clear();
     }
 }
 
