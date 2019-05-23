@@ -70,12 +70,19 @@ flashComponentDomContainer.appendChild(flashComponent.getDomContainer());
 dispatcher.subscribe('addCity', newCityName => {
     geocoder.getCityFromName(newCityName)
         .then((newCity) => {
+            if (globalState.cityExists(newCity)) {
+                throw {messageForUser: 'город уже есть в списке'};
+            }
             const newState = CitiesStateFactory.addCity(globalState, newCity);
             dispatcher.publish('displayWeatherForActiveCity', newState);
         })
         .catch((e) => {
-            console.error(e);
-            cityList.displayValidationErrors(['Не удалось найти город с переданным именем']);
+            let message = e.messageForUser;
+            if (!message) {
+                message = 'Не удалось найти город с переданным именем'
+                console.error(e);
+            }
+            cityList.displayValidationErrors([message]);
         });
 
 });
