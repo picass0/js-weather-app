@@ -9,7 +9,7 @@ class WeatherComponent extends Component{
 
     /**
      * @param container
-     * @param {WeatherDataProvider} weatherDataProvider
+     * @param {ApixuWeatherDataProvider} weatherDataProvider
      */
     constructor (container, weatherDataProvider) {
         super(container);

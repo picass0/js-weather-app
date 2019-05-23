@@ -4,7 +4,7 @@ import DailyWeather from '../entity/DailyWeather';
 /**
  * Provides weather related information
  */
-class WeatherDataProvider {
+class ApixuWeatherDataProvider {
 
     constructor(apiKey) {
         this.url = 'https://api.apixu.com/v1/forecast.json';
@@ -79,4 +79,4 @@ class WeatherDataProvider {
     }
 }
 
-export default WeatherDataProvider;
+export default ApixuWeatherDataProvider;

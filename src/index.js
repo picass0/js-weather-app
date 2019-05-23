@@ -2,7 +2,7 @@ import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch';
 import EventDispatcher from './js/service/EventDispatcher';
 import CitiesRepository from './js/service/CitiesRepository';
-import WeatherDataProvider from './js/service/WeatherDataProvider';
+import ApixuWeatherDataProvider from './js/service/ApixuWeatherDataProvider';
 import WeatherComponent from './js/component/WeatherComponent';
 import CityList from "./js/component/CityList";
 import cityNameValidator from './js/validator/cityNameValidator';
@@ -56,7 +56,7 @@ const weatherDataForCities = {};
 const weatherComponentDomContainer = document.querySelector('#weather-list');
 const weatherComponent = new WeatherComponent(
     weatherComponentDomContainer,
-    new WeatherDataProvider(parameters.apiKey),
+    new ApixuWeatherDataProvider(parameters.apixuApiKey),
 );
 weatherComponent.render(globalState.getActiveCity(), parameters.days);
 
