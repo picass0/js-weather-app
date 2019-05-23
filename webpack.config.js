@@ -2,9 +2,11 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const devtool = process.env.NODE_ENV === 'development' ? 'cheap-module-eval-source-map' : 'cheap-module-source-map';
+
 module.exports = {
-    mode: 'development',
-    devtool: "cheap-module-eval-source-map",
+    mode: process.env.NODE_ENV,
+    devtool: devtool,
     entry: {
         app: './src/index.js',
     },
