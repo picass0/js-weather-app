@@ -1,6 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
     background: white;
 }
+
+.container {
+  display: flex;
+}
+
+
 
 .card {
     padding: 3px;

@@ -14,6 +14,8 @@ import FlashComponent from './js/component/FlashComponent';
 import CitiesStateFactory from './js/service/CitiesStateFactory';
 import City from "./js/entity/City";
 
+import style from './scss/style.scss';
+
 
 //initializing services
 const dispatcher = new EventDispatcher(document.body);

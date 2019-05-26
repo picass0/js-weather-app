@@ -23,6 +23,10 @@ module.exports = {
                     }
                 }
             },
+            {
+                test: /\.scss$/,
+                use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
+            }
         ]
     },
 
@@ -36,8 +40,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin ([
-            {from: './src/index.html', to: './index.html'},
-            {from: './src/assets', to: './assets'}
+            {from: './src/index.html', to: './index.html'}
         ])
     ]
 };
