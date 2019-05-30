@@ -1,20 +1,126 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i&display=swap');
+@import 'toggle-button';
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    background: white;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
 }
-
-.container {
-  display: flex;
-}
-
-
 
 .card {
-    padding: 3px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+  padding: 3px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.desktop-cities--container {
+  display: none;
+}
+
+.city-list {
+  display: none;
+}
+
+.mobile-city-list {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: white;
+  z-index: 200;
+  height: 100vh;
+  width: 70vw;
+
+  flex-direction: column;
+  justify-content: center;
+}
+
+.backdrop {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.mobile-cities {
+  display: flex;
+  align-items: center;
+
+  &__item {
+    margin-right: 0.5rem;
+  }
+}
+
+.city {
+  padding: 1rem 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1.1rem;
+  position: relative;
+  &__item {
+    margin-right: 0.3rem;
+  }
+
+  &__delete {
+    cursor: pointer;
+    display: block;
+    vertical-align: middle;
+    position: absolute;
+    top: 0.3rem;
+    right: 0.6rem;
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    color: #595959;
+    &:hover {
+      color: black;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &--active-mobile-visible {
+    font-size: 2rem;
+  }
+
+
+  &--active, &:hover {
+    background: #f1f3f5;
+  }
+}
+
+
+@media (min-width: 40rem) {
+  .mobile-cities__container {
+    display: none;
+  }
+
+  .desktop-cities__container {
+    display: block;
+  }
+
+  .city-list {
+    display: block;
+  }
+
+  .container {
+    display: flex;
+    max-width: 60rem;
+    margin: 0 auto;
+  }
 }

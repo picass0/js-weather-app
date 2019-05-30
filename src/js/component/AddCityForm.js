@@ -5,15 +5,17 @@ import Component from './Component';
  */
 class AddCityForm extends Component {
 
-    constructor () {
+    constructor (eventDispatcher) {
         const domContainer = document.createElement('form');
         super(domContainer);
+        this.eventDispatcher = eventDispatcher;
     }
 
     render (addCityHanddler) {
         const textField = document.createElement('input');
         textField.setAttribute('type', 'text');
         this.domContainer.appendChild(textField);
+        this.textField = textField;
 
         const addCityButton = document.createElement('button');
         addCityButton.textContent = 'Добавить город';
@@ -30,13 +32,33 @@ class AddCityForm extends Component {
         });
 
         textField.addEventListener('input', () => {
-            if (this.errorBox.style.display === 'none') {
+            this.eventDispatcher.publish('textChanged', this.textField.value);
+            this.eventDispatcher.publish('clearValidationErrors', true);
+            this.clearErrors();
+        });
+
+        this.eventDispatcher.subscribe('textChanged', (newValue) => {
+            if (this.textField.value === newValue) {
                 return;
             }
 
-            this.clear(this.errorBox);
-            this.errorBox.style.display = 'none';
+            this.textField.value = newValue;
+            this.eventDispatcher.publish('clearValidationErrors', true);
+            this.clearErrors();
+        });
+
+        this.eventDispatcher.subscribe('clearValidationErrors', () => {
+            this.clearErrors();
         })
+    }
+
+    clearErrors () {
+        if (this.errorBox.style.display === 'none') {
+            return;
+        }
+
+        this.clear(this.errorBox);
+        this.errorBox.style.display = 'none';
     }
 
     /**

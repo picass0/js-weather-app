@@ -1,0 +1,21 @@
+.toggle-button {
+  cursor:pointer;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border: none;
+  background: #0080ff;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.6rem;
+
+  &__bar {
+    display: block;
+    width: 1.5rem;
+    height: 0.2rem;
+    background: white;
+
+  }
+}

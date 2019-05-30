@@ -1,5 +1,6 @@
 import 'promise-polyfill/src/polyfill';
 import 'whatwg-fetch';
+import './global-assets';
 import EventDispatcher from './js/service/EventDispatcher';
 import CitiesRepository from './js/service/CitiesRepository';
 import ApixuWeatherDataProvider from './js/service/ApixuWeatherDataProvider';
@@ -13,8 +14,6 @@ import OpenCageGeocoder from './js/service/OpenCageGeocoder';
 import FlashComponent from './js/component/FlashComponent';
 import CitiesStateFactory from './js/service/CitiesStateFactory';
 import City from "./js/entity/City";
-
-import style from './scss/style.scss';
 
 
 //initializing services
@@ -87,7 +86,7 @@ dispatcher.subscribe('addCity', newCityName => {
         .catch((e) => {
             let message = e.messageForUser;
             if (!message) {
-                message = 'Не удалось найти город с переданным именем'
+                message = 'Не удалось найти город с переданным именем';
                 console.error(e);
             }
             cityList.displayValidationErrors([message]);
@@ -133,6 +132,10 @@ dispatcher.subscribe('cannotDisplayWeatherForCity', city => {
     if (cityList.isCityBeingAdded()) {
         cityList.displayValidationErrors(["Не получилось отобразить погоду для города " + city.getNameOrStateIfNotExists()]);
         cityList.setCityBeingAdded(false);
+        const activeCity = globalState.getActiveCity();
+        if (activeCity) {
+            dispatcher.publish('displayWeatherForActiveCity', globalState);
+        }
     }
 });
 
@@ -149,7 +152,10 @@ dispatcher.subscribe('weatherForCityDisplayed', (data) => {
     if (data.citiesState.getCities() && data.weatherList && data.weatherList.length > 0) {
         weatherDataForCities[data.citiesState.getActiveCity().getId()] = data.weatherList;
     }
-    dispatcher.publish('stateChanged', data.citiesState);
+
+    if (!globalState.equals(data.citiesState)) {
+        dispatcher.publish('stateChanged', data.citiesState);
+    }
 });
 
 dispatcher.subscribe('stateChanged', (state) => {

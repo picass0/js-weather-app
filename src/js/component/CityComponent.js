@@ -4,7 +4,7 @@ class CityComponent extends Component {
 
     constructor() {
         super();
-        this.domContainer.classList.add('card')
+        this.domContainer.classList.add('city')
     }
 
     /**
@@ -18,24 +18,33 @@ class CityComponent extends Component {
         this.clear();
         this.domContainer.addEventListener('click', clickHandler);
 
-        const cityName = document.createElement('h3');
+        const cityName = document.createElement('div');
+        cityName.classList.add('city__item');
         cityName.textContent = cityModel.getName();
         this.domContainer.appendChild(cityName);
 
-        const cityState = document.createElement('p');
-        cityState.textContent = cityModel.getState();
+        let postfix = ',';
+        let tagName = 'span';
+        if (!cityModel.getName()) {
+            tagName = 'div';
+            postfix = '';
+        }
+        const cityState = document.createElement(tagName);
+        cityState.classList.add('city__item');
+        cityState.textContent = cityModel.getState() + postfix;
         this.domContainer.appendChild(cityState);
 
-        const cityCountry = document.createElement('p');
+        const cityCountry = document.createElement('span');
+        cityCountry.classList.add('city__item');
         cityCountry.textContent = cityModel.getCountry();
         this.domContainer.appendChild(cityCountry);
 
         if (isActiveCity) {
-            this.domContainer.style.background = 'red';
+            this.domContainer.classList.add('city--active');
         }
 
         const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Удалить';
+        deleteButton.classList.add('city__delete', 'far', 'fa-times-circle');
         deleteButton.addEventListener('click', (e) => {
             e.stopPropagation();
             deleteHandler(e)

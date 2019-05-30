@@ -52,6 +52,33 @@ class CitiesState {
             activeCityId: !!this.activeCity ? this.activeCity.id : null
         };
     }
+
+    /**
+     *
+     * @param {CitiesState} citiesState
+     * @returns {boolean}
+     */
+    equals(citiesState) {
+        const cities = citiesState.getCities();
+        for (let i = 0; i < cities.length; i++) {
+            if (!this.cityExists(cities[i])) {
+                return false
+            }
+        }
+
+        const thisActiveCityId = this.getActiveCity() ? this.getActiveCity().getId() : null;
+        const passedActiveCityId = citiesState.getActiveCity() ? citiesState.getActiveCity().getId() : null;
+
+        if (thisActiveCityId !== passedActiveCityId) {
+            return false;
+        }
+
+        if (this.getDefaultCity().getId() !== citiesState.getDefaultCity().getId()) {
+            return false;
+        }
+
+        return true;
+    }
 }
 
 export default CitiesState;

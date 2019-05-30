@@ -12,6 +12,11 @@ export default function cityNameValidator(cityName) {
         errors.push("Название города не может быть пустым");
     }
 
+    if (!/[a-zA-ZА-Яа-я]/.test(cleanedCityName)) {
+        success = false;
+        errors.push("Название города должно иметь как минимум 1 букву");
+    }
+
     return {
         success: success,
         errors: errors

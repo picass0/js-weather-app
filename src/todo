@@ -1,6 +1,7 @@
 /*
  main todo list:
 
+   - import fontawesome locally
    - do not call changeActiveCity if we clicked on active city
    - eventdispatcher can publish events without data
    - citiesState.setActiveCities, cities.removeCity - check if city exists
