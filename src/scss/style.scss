@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,400i&display=swap');
 @import 'toggle-button';
 
+$main-color: #0080ff;
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,6 +13,14 @@ body {
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
   color: #333;
+}
+
+.cities {
+  width: 22rem;
+}
+
+.weather {
+  width: 38rem;
 }
 
 .card {
@@ -86,7 +96,8 @@ body {
     width: 1.6rem;
     height: 1.6rem;
     color: #595959;
-    &:hover {
+    &:hover,
+    &:active {
       color: black;
     }
     &:focus {
@@ -101,6 +112,66 @@ body {
 
   &--active, &:hover {
     background: #f1f3f5;
+  }
+}
+
+.submit-button {
+  cursor: pointer;
+  background: $main-color;
+  border: 1px solid $main-color;
+  color: white;
+  padding: 0.3rem 0;
+  line-height: 1.5;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  display: block;
+  width: 100%;
+
+  &:hover, &:active {
+    background: darken($main-color, 10%);
+    border-color: darken($main-color, 10%);;
+    //color: $main-color;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem lighten($main-color, 40%);
+    border-color: #0080ff;
+  }
+}
+
+.form-text-field {
+  font-size: 1rem;
+  display: block;
+  width: 100%;
+  border: 1px solid #595959;
+  line-height: 1.5;
+
+  padding: 0.3rem 0.5rem;
+  border-radius: .25rem;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem lighten($main-color, 40%);
+    border-color: #0080ff;
+  }
+}
+
+.add-city-form {
+  padding: 0 0.3rem;
+  margin: 0.5rem 0;
+  &__item {
+    margin: 0.4rem 0;
+  }
+
+  &__error-box {
+    list-style: none;
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  @media (min-width: 40rem) {
+    padding: 0;
   }
 }
 

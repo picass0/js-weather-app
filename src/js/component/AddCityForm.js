@@ -7,24 +7,30 @@ class AddCityForm extends Component {
 
     constructor (eventDispatcher) {
         const domContainer = document.createElement('form');
+        domContainer.classList.add('add-city-form');
         super(domContainer);
         this.eventDispatcher = eventDispatcher;
     }
 
     render (addCityHanddler) {
+
         const textField = document.createElement('input');
+        textField.classList.add('form-text-field', 'add-city-form__item');
         textField.setAttribute('type', 'text');
+        textField.setAttribute('placeholder', 'Название города');
         this.domContainer.appendChild(textField);
         this.textField = textField;
 
-        const addCityButton = document.createElement('button');
-        addCityButton.textContent = 'Добавить город';
-        this.domContainer.appendChild(addCityButton);
-
         const errorBox = document.createElement('ul');
         errorBox.style.display = 'none';
+        errorBox.classList.add('add-city-form__error-box', 'add-city-form__item');
         this.domContainer.appendChild(errorBox);
         this.errorBox = errorBox;
+
+        const addCityButton = document.createElement('button');
+        addCityButton.classList.add('submit-button', 'add-city-form__item');
+        addCityButton.textContent = 'Добавить';
+        this.domContainer.appendChild(addCityButton);
 
         this.domContainer.addEventListener('submit', (e) => {
             e.preventDefault();
