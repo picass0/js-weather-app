@@ -149,8 +149,8 @@ dispatcher.subscribe('cannotDisplayWeatherForCity', city => {
 
 
 dispatcher.subscribe('weatherForCityDisplayed', (data) => {
-    if (data.citiesState.getCities() && data.weatherList && data.weatherList.length > 0) {
-        weatherDataForCities[data.citiesState.getActiveCity().getId()] = data.weatherList;
+    if (data.citiesState.getCities() && data.weatherView && data.weatherView.length > 0) {
+        weatherDataForCities[data.citiesState.getActiveCity().getId()] = data.weatherView;
     }
 
     if (!globalState.equals(data.citiesState)) {

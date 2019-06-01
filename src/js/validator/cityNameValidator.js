@@ -14,7 +14,7 @@ export default function cityNameValidator(cityName) {
 
     if (!/[a-zA-ZА-Яа-я]/.test(cleanedCityName)) {
         success = false;
-        errors.push("Название города должно иметь как минимум 1 букву");
+        errors.push("Название города должно содержать как минимум 1 букву");
     }
 
     return {

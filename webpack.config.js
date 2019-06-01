@@ -40,7 +40,8 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin ([
-            {from: './src/index.html', to: './index.html'}
+            {from: './src/index.html', to: './index.html'},
+            {from: './src/assets', to: './assets'}
         ])
     ]
 };

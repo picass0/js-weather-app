@@ -1,61 +1,66 @@
-import Component from './Component';
+import Component from "./Component";
+import {getDayShort} from "../utils/utils";
 
-
-class WeatherList extends Component{
-
-    constructor() {
-        super();
-        this.domContainer.classList.add('card')
+class WeatherList extends Component {
+    constructor (eventDispatcher, domElement) {
+        super(domElement);
+        this.eventDispatcher = eventDispatcher;
+        this.domContainer.classList.add('weather-list');
+        this.items = [];
     }
-
-    render(city, weatherDataCollection) {
+    render(weatherDataCollection) {
         this.clear();
-
-        if (!city) {
-            return;
-        }
-
-        const header = document.createElement('h3');
-        header.textContent = `Погода для города ${city.getNameOrStateIfNotExists()}:`;
-        this.domContainer.appendChild(header);
 
         weatherDataCollection.forEach((weatherData) => {
             const container = document.createElement('div');
-            container.classList.add('card');
-            this.domContainer.appendChild(container);
+            container.classList.add('weather-summary', 'weather-list__item');
+
 
             let el = document.createElement('div');
-            el.textContent = 'maxTemperature: ' + weatherData.maxTemperature;
+            el.textContent = getDayShort(weatherData.date);
             container.appendChild(el);
 
-            el = document.createElement('div');
-            el.textContent = 'description: ' + weatherData.description;
-            container.appendChild(el);
+            if (weatherData.icon) {
+                el = document.createElement('img');
+                el.setAttribute('src', weatherData.icon);
+                el.classList.add('weather-summary__item');
+                container.appendChild(el);
+            }
 
-            el = document.createElement('img');
-            el.setAttribute('src', weatherData.icon);
-            container.appendChild(el);
+            const temperatureWrapper = document.createElement('div');
+            temperatureWrapper.classList.add('weather-summary__temperature-container');
 
-            el = document.createElement('div');
-            el.textContent = 'date: ' + weatherData.date.toString();
-            container.appendChild(el);
+            el = document.createElement('span');
+            el.textContent = weatherData.maxTemperature + '°';
+            el.classList.add('weather-summary__main-temperature');
+            temperatureWrapper.appendChild(el);
 
-            el = document.createElement('div');
-            el.textContent = 'minTemperature: ' + weatherData.minTemperature;
-            container.appendChild(el);
+            if (weatherData.hasOwnProperty('minTemperature')) {
+                el = document.createElement('span');
+                el.textContent = weatherData.minTemperature + '°';
+                el.classList.add('weather-summary__secondary-temperature');
+                temperatureWrapper.appendChild(el);
+            }
 
-            el = document.createElement('div');
-            el.textContent = 'precipitation: ' + weatherData.precipitation;
-            container.appendChild(el);
 
-            el = document.createElement('div');
-            el.textContent = 'humidity: ' + weatherData.humidity;
-            container.appendChild(el);
+            container.appendChild(temperatureWrapper);
 
-            el = document.createElement('div');
-            el.textContent = 'wind: ' + weatherData.wind.toFixed(2);
-            container.appendChild(el);
-        })
+            container.addEventListener('click', () => {
+                this.items.forEach((item) => {
+                    if (item.classList.contains('weather-summary--active')) {
+                        item.classList.remove('weather-summary--active');
+                    }
+                });
+                container.classList.add('weather-summary--active');
+                this.eventDispatcher.publish('displayWeatherForDay', weatherData);
+            });
+
+            this.domContainer.appendChild(container);
+            this.items.push(container);
+        });
+
+        this.items[0].classList.add('weather-summary--active');
+
     }
 }
 

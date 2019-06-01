@@ -1,17 +1,27 @@
 /*
  main todo list:
 
+   - add zeroes to minutes and hours
+   - можга
+   - subfolders for components and group scss with js
+   - styling (and sass + autoprefixers + fonts in webpack config)
+   - wheel styling
+   - do not forget to style falsh component
+   - do not forget to correctly render if there is no city
+   - check in all browsers (ie11)
+   - different component for current day
+   - do not forget to style wheel
+   - dispaly local time
+
    - import fontawesome locally
    - do not call changeActiveCity if we clicked on active city
    - eventdispatcher can publish events without data
    - citiesState.setActiveCities, cities.removeCity - check if city exists
-
-   - styling (and sass + autoprefixers + fonts in webpack config)
-   - check in all browsers (ie11)
-   - different component for current day
    - add readme.md
+   !!! - store lat + lng in city and search in apixu based on lat + lng
 
-   - store lat + lng in city and search in apixu based on lat + lng
+
+   - better DailyWeather construction - check if forecast first element is junk before deleting, check that current weather is for current day and not for yesterday
    - hashmap in CityList
    - toy with async+await
    - describe json data via json schema

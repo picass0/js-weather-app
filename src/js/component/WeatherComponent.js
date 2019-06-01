@@ -2,7 +2,7 @@
  * aggregates weather handling logic for convenience
  */
 import Component from "./Component";
-import WeatherList from "./WeatherList";
+import WeatherView from "./WeatherView";
 import WheelPlaceholder from "./WheelPlaceholder";
 
 class WeatherComponent extends Component{
@@ -14,10 +14,10 @@ class WeatherComponent extends Component{
     constructor (container, weatherDataProvider) {
         super(container);
         this.weatherDataProvider = weatherDataProvider;
-        this.weatherList = new WeatherList();
+        this.weatherView = new WeatherView();
         this.wheel = new WheelPlaceholder();
 
-        this.getDomContainer().appendChild(this.weatherList.getDomContainer());
+        this.getDomContainer().appendChild(this.weatherView.getDomContainer());
         this.getDomContainer().appendChild(this.wheel.getDomContainer());
     }
 
@@ -29,25 +29,25 @@ class WeatherComponent extends Component{
     render(city, days, weatherList = null) {
         if (!city) {
             return new Promise((resolve, reject) => {
-                this.weatherList.render(city, []);
+                this.weatherView.render(city, []);
                 resolve([]);
             });
         }
 
         if (weatherList) {
             return new Promise((resolve, reject) => {
-                this.weatherList.render(city, weatherList);
+                this.weatherView.render(city, weatherList);
                 resolve([]);
             });
         }
 
-        this.weatherList.clear();
+        this.weatherView.clear();
         this.wheel.render();
 
         return this.weatherDataProvider.getDataForCity(city, days)
             .then((weatherList) => {
                 this.wheel.clear();
-                this.weatherList.render(city, weatherList);
+                this.weatherView.render(city, weatherList);
                 return weatherList;
             }).catch((err) => {
                 this.wheel.clear();
