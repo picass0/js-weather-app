@@ -17,7 +17,7 @@ class ApixuWeatherDataProvider {
      * @returns {Promise}
      */
     getDataForCity(city, days) {
-        const url = `${this.url}?key=${this.apiKey}&q=${city.name}&days=${days}&lang=ru`;
+        const url = `${this.url}?key=${this.apiKey}&q=${city.getLat()}, ${city.getLong()}&days=${days}&lang=ru`;
         return fetch(url)
             .then(response => {
                 if (!response.ok) {

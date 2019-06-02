@@ -7,6 +7,8 @@ class City {
         this.name = rawJsonData.name || null;
         this.state = rawJsonData.state || null;
         this.country = rawJsonData.country || null;
+        this.lat = rawJsonData.hasOwnProperty('lat') ? rawJsonData.lat : null;
+        this.long = rawJsonData.hasOwnProperty('long') ? rawJsonData.long : null;
 
         this.id = (this.name ? this.name : '') + (this.state ? this.state : '') + (this.country ? this.country : '');
     }
@@ -15,8 +17,18 @@ class City {
         return{
             name: this.name,
             state: this.state,
-            country: this.country
+            country: this.country,
+            lat: this.lat,
+            long: this.long
         };
+    }
+
+    getLat () {
+        return this.lat;
+    }
+
+    getLong () {
+        return this.long
     }
 
     getCountry () {

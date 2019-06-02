@@ -73,11 +73,26 @@ class OpenCageGeocoder {
                      throw {msg: "not enough information in response.results[0].components object", response: response};
                  }
 
+                 if (!result.hasOwnProperty('geometry')) {
+                     throw {msg: "response.results[0].geomtery should be present in response", response: response}
+                 }
+
+                 const geometry = result.geometry;
+
+                 if (!geometry.hasOwnProperty('lat') || !geometry.hasOwnProperty('lng')) {
+                     throw {msg: 'not enough information in response.results[0].geometry object', response: response};
+                 }
+
+                 const lat = geometry.lat;
+                 const lng = geometry.lng;
+
 
                 return new City({
                     state: state,
                     name: city,
-                    country: country
+                    country: country,
+                    lat: lat,
+                    long: lng
                 });
             });
     }
