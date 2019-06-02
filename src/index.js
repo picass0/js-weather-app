@@ -33,7 +33,7 @@ if (!globalState) {
         lng: 37.6174943
     });
 
-    globalState = new CitiesState([defaultCity], defaultCity, defaultCity);
+    globalState = new CitiesState([defaultCity], defaultCity);
     const geolocator = new Geolocator(geocoder);
 
     geolocator.findCurrentCity()
