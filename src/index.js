@@ -7,7 +7,7 @@ import ApixuWeatherDataProvider from './js/service/ApixuWeatherDataProvider';
 import WeatherMain from './js/component/weather/WeatherMain';
 import CitiesMain from "./js/component/cities/CitiesMain";
 import cityNameValidator from './js/validator/cityNameValidator';
-import parameters from './parameters.json';
+import parameters from '../parameters.json';
 import CitiesState from './js/entity/CitiesState';
 import Geolocator from './js/service/Geolocator';
 import OpenCageGeocoder from './js/service/OpenCageGeocoder';
