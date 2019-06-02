@@ -15,6 +15,10 @@ class WeatherView extends Component{
         this.clear();
 
         if (!city) {
+            const p = document.createElement('p');
+            p.textContent = 'Добавь город и все будет';
+            p.classList.add('current-weather__no-cities');
+            this.domContainer.appendChild(p);
             return;
         }
 

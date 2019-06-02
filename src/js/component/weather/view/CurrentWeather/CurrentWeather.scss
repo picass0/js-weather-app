@@ -1,4 +1,9 @@
 .current-weather {
+  &__no-cities {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
   &__header {
     display: none;
     @media (min-width: 40rem) {
