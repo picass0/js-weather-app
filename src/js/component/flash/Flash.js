@@ -6,23 +6,29 @@ class Flash extends Component{
 
     constructor () {
         super();
-        this.domContainer.classList.add('flash');
     }
 
     render (messages) {
         this.clear();
 
+        const container = document.createElement('div');
+        container.classList.add('flash');
+
         messages.forEach((message) => {
             const p = document.createElement('p');
             p.textContent = message;
             p.classList.add('flash__item');
-            this.domContainer.appendChild(p);
+            container.appendChild(p);
         });
 
-        this.domContainer.style.display = 'block';
+        this.domContainer.appendChild(container);
+
+        container.style.display = 'block';
         setTimeout(() => {
-            this.domContainer.style.display = 'none';
-        }, 3000)
+            container.style.display = 'none';
+        }, 3000);
+
+
 
     }
 }
