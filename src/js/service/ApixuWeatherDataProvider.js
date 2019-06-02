@@ -41,16 +41,16 @@ class ApixuWeatherDataProvider {
             }
         }
 
-        const current = response.current;
-
-        if (!current.hasOwnProperty('last_updated')) {
+        if (!propertyExists(response, 'location', 'localtime')) {
             throw {
-                msg: "cannot display weather data, undexpected response format, cannot find 'current.last_updated' parameter in response",
+                msg: "cannot display weather data, undexpected response format, cannot find 'location.localtime' parameter in response",
                 response: response
             }
         }
 
-        const date = new Date(current.last_updated);
+        const date = new Date(response.location.localtime);
+
+        const current = response.current;
 
         if (!current.hasOwnProperty('temp_c')) {
             throw {
