@@ -1,0 +1,41 @@
+.current-weather {
+  &__header {
+    display: none;
+    @media (min-width: 40rem) {
+      display: block;
+    }
+  }
+
+  &__main {
+    margin: 1rem 0;
+    display: flex;
+  }
+
+  &__left,
+  &__right {
+    width: 50%;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    margin-right:1rem;
+  }
+
+  &__line {
+    line-height: 1.4;
+  }
+
+  &__temperature {
+    font-size: 4rem;
+    font-weight: 400;
+    margin-left: 0.2rem;
+  }
+
+  &__celsius {
+    font-size: 1.2rem;
+    position: relative;
+    top: -0.9rem;
+    right: -0.4rem;
+  }
+}

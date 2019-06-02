@@ -1,0 +1,39 @@
+@import "../../../../scss/_variables.scss";
+
+.city {
+  padding: 1rem 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1.1rem;
+  position: relative;
+  &__item {
+    margin-right: 0.3rem;
+  }
+
+  &__delete {
+    cursor: pointer;
+    display: block;
+    vertical-align: middle;
+    position: absolute;
+    top: 0.3rem;
+    right: 0.6rem;
+    background: transparent;
+    border: none;
+    font-size: 1.4rem;
+    line-height: 1.6rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    color: lighten($text-color, 15%);
+    &:hover,
+    &:active {
+      color: darken($text-color, 100%);
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &--active, &:hover {
+    background: $active-and-hover-color;
+  }
+}

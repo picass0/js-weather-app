@@ -1,10 +1,14 @@
-import CitiesContainer from "./CitiesContainer";
+import BaseCitiesContainer from "../BaseCitiesContainer";
 
-class MobileCitiesContainer extends CitiesContainer {
+import'./MobileCities.scss';
+import './Backdrop.scss';
+import './ToggleButton.scss';
+
+class MobileCities extends BaseCitiesContainer {
 
     constructor(handlerFactories, eventDispatcher) {
         super(handlerFactories, eventDispatcher);
-        this.domContainer.classList.add('mobile-cities__container')
+        this.domContainer.classList.add('mobile-cities')
     }
 
     render(newState) {
@@ -15,7 +19,7 @@ class MobileCitiesContainer extends CitiesContainer {
         this.domContainer.appendChild(backdrop);
 
         const visiblePartContainer = document.createElement('div');
-        visiblePartContainer.classList.add('mobile-cities');
+        visiblePartContainer.classList.add('mobile-cities__header');
 
         const toggleButton = document.createElement('button');
         toggleButton.classList.add('toggle-button');
@@ -26,22 +30,22 @@ class MobileCitiesContainer extends CitiesContainer {
             toggleButton.appendChild(bar);
         }
         let div = document.createElement('div');
-        div.classList.add('mobile-cities__item');
+        div.classList.add('mobile-cities__header-item');
         div.appendChild(toggleButton);
         visiblePartContainer.appendChild(div);
 
         const activeCity = document.createElement('span');
-        activeCity.classList.add('city--active-mobile-visible');
+        activeCity.classList.add('mobile-cities__visible-city');
         activeCity.textContent = !!newState.getActiveCity() ? newState.getActiveCity().getNameOrStateIfNotExists() : 'Нет активного города';
         div = document.createElement('div');
-        div.classList.add('mobile-cities__item');
+        div.classList.add('mobile-cities__header-item');
         div.appendChild(activeCity);
         visiblePartContainer.appendChild(div);
 
         this.domContainer.appendChild(visiblePartContainer);
 
         const cityListContainer = document.createElement('div');
-        cityListContainer.classList.add('mobile-city-list');
+        cityListContainer.classList.add('mobile-cities__list');
         this.domContainer.appendChild(cityListContainer);
 
         super.createContent(newState, cityListContainer);
@@ -59,4 +63,4 @@ class MobileCitiesContainer extends CitiesContainer {
     }
 }
 
-export default MobileCitiesContainer;
+export default MobileCities;

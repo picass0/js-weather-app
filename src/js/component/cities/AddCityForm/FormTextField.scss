@@ -1,0 +1,18 @@
+@import "../../../../scss/_variables.scss";
+
+.form-text-field {
+  font-size: 1rem;
+  display: block;
+  width: 100%;
+  border: 1px solid #595959;
+  line-height: 1.5;
+
+  padding: 0.3rem 0.5rem;
+  border-radius: .5rem;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem lighten($main-color, 40%);
+    border-color: $main-color;
+  }
+}

@@ -4,14 +4,14 @@ import './global-assets';
 import EventDispatcher from './js/service/EventDispatcher';
 import CitiesRepository from './js/service/CitiesRepository';
 import ApixuWeatherDataProvider from './js/service/ApixuWeatherDataProvider';
-import WeatherComponent from './js/component/WeatherComponent';
-import CityList from "./js/component/CityList";
+import WeatherMain from './js/component/weather/WeatherMain';
+import CitiesMain from "./js/component/cities/CitiesMain";
 import cityNameValidator from './js/validator/cityNameValidator';
 import parameters from './parameters.json';
 import CitiesState from './js/entity/CitiesState';
 import Geolocator from './js/service/Geolocator';
 import OpenCageGeocoder from './js/service/OpenCageGeocoder';
-import FlashComponent from './js/component/FlashComponent';
+import FlashComponent from './js/component/flash/FlashComponent';
 import CitiesStateFactory from './js/service/CitiesStateFactory';
 import City from "./js/entity/City";
 
@@ -49,18 +49,16 @@ const weatherDataForCities = {};
 
 
 //registering components
-const weatherComponentDomContainer = document.querySelector('#weather-list');
-const weatherComponent = new WeatherComponent(
+const citiesDomContainer = document.querySelector('#cities');
+const mainCitiesComponent = new CitiesMain(dispatcher, cityNameValidator, citiesDomContainer);
+mainCitiesComponent.render(globalState);
+
+const weatherComponentDomContainer = document.querySelector('#weather');
+const weatherComponent = new WeatherMain(
     weatherComponentDomContainer,
     new ApixuWeatherDataProvider(parameters.apixuApiKey),
 );
 weatherComponent.render(globalState.getActiveCity(), parameters.days);
-
-
-const cityList = new CityList(dispatcher, cityNameValidator);
-const cityListParent = document.querySelector('#cities');
-cityListParent.appendChild(cityList.getDomContainer());
-cityList.render(globalState);
 
 const flashComponent = new FlashComponent();
 const flashComponentDomContainer = document.body;
@@ -84,7 +82,7 @@ dispatcher.subscribe('addCity', newCityName => {
                 message = 'Не удалось найти город с переданным именем';
                 console.error(e);
             }
-            cityList.displayValidationErrors([message]);
+            mainCitiesComponent.displayValidationErrors([message]);
         });
 
 });
@@ -124,9 +122,9 @@ dispatcher.subscribe('displayWeatherForActiveCity', state => {
 });
 
 dispatcher.subscribe('cannotDisplayWeatherForCity', city => {
-    if (cityList.isCityBeingAdded()) {
-        cityList.displayValidationErrors(["Не получилось отобразить погоду для города " + city.getNameOrStateIfNotExists()]);
-        cityList.setCityBeingAdded(false);
+    if (mainCitiesComponent.isCityBeingAdded()) {
+        mainCitiesComponent.displayValidationErrors(["Не получилось отобразить погоду для города " + city.getNameOrStateIfNotExists()]);
+        mainCitiesComponent.setCityBeingAdded(false);
         const activeCity = globalState.getActiveCity();
         if (activeCity) {
             dispatcher.publish('displayWeatherForActiveCity', globalState);
@@ -155,6 +153,6 @@ dispatcher.subscribe('weatherForCityDisplayed', (data) => {
 
 dispatcher.subscribe('stateChanged', (state) => {
     globalState = state;
-    cityList.render(state);
+    mainCitiesComponent.render(state);
     citiesRepo.persisState(globalState);
 });

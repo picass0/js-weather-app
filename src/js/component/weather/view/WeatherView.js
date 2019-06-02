@@ -1,7 +1,7 @@
-import Component from './Component';
-import CurrentWeather from "./CurrentWeather";
-import WeatherList from "./WeatherList";
-import EventDispatcher from "../service/EventDispatcher";
+import Component from '../../Component';
+import CurrentWeather from "./CurrentWeather/CurrentWeather";
+import WeatherList from "./WeatherList/WeatherList";
+import EventDispatcher from "../../../service/EventDispatcher";
 
 
 class WeatherView extends Component{

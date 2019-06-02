@@ -1,0 +1,32 @@
+.mobile-cities {
+  @media (min-width: 40rem) {
+    display: none;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+  }
+
+  &__header-item {
+    margin-right: 0.5rem;
+  }
+
+  &__visible-city {
+    font-size: 2rem;
+  }
+
+  &__list {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: 200;
+    height: 100vh;
+    width: 70vw;
+
+    flex-direction: column;
+    justify-content: center;
+  }
+}

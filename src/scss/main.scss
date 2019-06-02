@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i&display=swap');
+@import '~@fortawesome/fontawesome-free/css/regular.min.css';
+@import '~@fortawesome/fontawesome-free/css/fontawesome.min.css';
+
+@import "./_variables.scss";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  color: $text-color;
+}
+
+.container {
+  @media (min-width: 40rem) {
+    display: flex;
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+}
+

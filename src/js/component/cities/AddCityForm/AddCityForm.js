@@ -1,4 +1,8 @@
-import Component from './Component';
+import Component from '../../Component';
+
+import './AddCityform.scss';
+import './FormTextField.scss';
+import './SubmitButton.scss'
 
 /**
  * component that renders add city form

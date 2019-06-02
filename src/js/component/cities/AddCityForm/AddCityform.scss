@@ -1,0 +1,17 @@
+.add-city-form {
+  padding: 0 0.3rem;
+  margin: 0.5rem 0;
+  &__item {
+    margin: 0.4rem 0;
+  }
+
+  &__error-box {
+    list-style: none;
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  @media (min-width: 40rem) {
+    padding: 0;
+  }
+}

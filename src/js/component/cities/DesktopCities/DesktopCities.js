@@ -1,17 +1,18 @@
-import CitiesContainer from "./CitiesContainer";
+import BaseCitiesContainer from "../BaseCitiesContainer";
 
-class DesktopCitiesContainer extends CitiesContainer {
+import './DesktopCities.scss';
+
+class DesktopCities extends BaseCitiesContainer {
 
     constructor(handlerFactories, eventDispatcher) {
         super(handlerFactories, eventDispatcher);
-        this.domContainer.classList.add('desktop-cities__container');
+        this.domContainer.classList.add('desktop-cities');
     }
 
     render(newState) {
         this.clear();
 
         const cityListContainer = document.createElement('div');
-        cityListContainer.classList.add('city-list');
         this.domContainer.appendChild(cityListContainer);
 
         super.createContent(newState, cityListContainer);
@@ -19,4 +20,4 @@ class DesktopCitiesContainer extends CitiesContainer {
 
 }
 
-export default DesktopCitiesContainer;
+export default DesktopCities;

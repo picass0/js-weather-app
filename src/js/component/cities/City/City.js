@@ -1,6 +1,9 @@
-import Component from './Component';
+import Component from '../../Component';
+import CityModel from '../../../entity/City';
 
-class CityComponent extends Component {
+import './City.scss';
+
+class City extends Component {
 
     constructor() {
         super();
@@ -9,7 +12,7 @@ class CityComponent extends Component {
 
     /**
      *
-     * @param {City} cityModel
+     * @param {CityModel} cityModel
      * @param deleteHandler
      * @param clickHandler
      * @param isActiveCity
@@ -53,4 +56,4 @@ class CityComponent extends Component {
     }
 }
 
-export default CityComponent;
+export default City;

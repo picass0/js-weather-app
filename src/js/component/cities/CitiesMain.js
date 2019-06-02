@@ -1,20 +1,24 @@
-import Component from './Component';
-import cityNameValidator from '../validator/cityNameValidator';
-import EventDispatcher from "../service/EventDispatcher";
-import DesktopCitiesContainer from "./DesktopCitiesContainer";
-import MobileCitiesContainer from "./MobileCitiesContainer";
+import Component from '../Component';
+import cityNameValidator from '../../validator/cityNameValidator';
+import EventDispatcher from "../../service/EventDispatcher";
+import DesktopCities from "./DesktopCities/DesktopCities";
+import MobileCities from "./MobileCities/MobileCities";
+
+import './CitiesMain.scss';
 
 /**
- *
+ * Main CitiesMain component
  */
-class CityList extends Component{
+class CitiesMain extends Component{
 
     /**
      * @param {EventDispatcher} eventDispatcher
      * @param {cityNameValidator} cityNameValidator
+     * @param domContainer
      */
-    constructor(eventDispatcher, cityNameValidator) {
-        super();
+    constructor(eventDispatcher, cityNameValidator, domContainer = null) {
+        super(domContainer);
+        this.domContainer.classList.add('cities-main');
 
         this.eventDispatcher = eventDispatcher;
         this.cityNameValidator = cityNameValidator;
@@ -27,8 +31,8 @@ class CityList extends Component{
             deleteCity: this.deleteCityHandlerFactory.bind(this)
         };
         this.containers = [
-            new DesktopCitiesContainer(handlerFactories, this.localEventDispatcher),
-            new MobileCitiesContainer(handlerFactories, this.localEventDispatcher)
+            new DesktopCities(handlerFactories, this.localEventDispatcher),
+            new MobileCities(handlerFactories, this.localEventDispatcher)
         ];
 
         this.containers.forEach((container) => {
@@ -112,4 +116,4 @@ class CityList extends Component{
     }
 }
 
-export default CityList;
+export default CitiesMain;

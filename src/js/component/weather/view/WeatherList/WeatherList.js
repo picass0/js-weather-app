@@ -1,5 +1,8 @@
-import Component from "./Component";
-import {getDayShort} from "../utils/utils";
+import Component from "../../../Component";
+import {getDayShort} from "../../../../utils/utils";
+
+import './WeatherList.scss';
+import './WeatherSummary.scss';
 
 class WeatherList extends Component {
     constructor (eventDispatcher, domElement) {

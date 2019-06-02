@@ -1,0 +1,25 @@
+@import "../../../../scss/_variables.scss";
+
+.submit-button {
+  cursor: pointer;
+  background: $main-color;
+  border: 1px solid $main-color;
+  color: white;
+  padding: 0.3rem 0;
+  line-height: 1.5;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  display: block;
+  width: 100%;
+
+  &:hover, &:active {
+    background: darken($main-color, 10%);
+    border-color: darken($main-color, 10%);;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem lighten($main-color, 40%);
+    border-color: $main-color;
+  }
+}

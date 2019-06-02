@@ -1,9 +1,9 @@
-import Component from './Component';
-import CityComponent from "./CityComponent";
-import WheelPlaceholder from "./WheelPlaceholder";
-import AddCityForm from "./AddCityForm";
+import Component from '../Component';
+import City from "./City/City";
+import WheelPlaceholder from "../wheel/WheelPlaceholder";
+import AddCityForm from "./AddCityForm/AddCityForm";
 
-class CitiesContainer extends Component{
+class BaseCitiesContainer extends Component{
     constructor(handlerFactories, eventDispatcher) {
         super();
         this.handlerFactories = handlerFactories;
@@ -17,7 +17,7 @@ class CitiesContainer extends Component{
 
     createContent (newState, container) {
         newState.getCities().forEach(cityModel => {
-            const cityComponent = new CityComponent();
+            const cityComponent = new City();
             cityComponent.render(
                 cityModel,
                 this.handlerFactories.deleteCity(cityModel),
@@ -51,4 +51,4 @@ class CitiesContainer extends Component{
     }
 }
 
-export default CitiesContainer
+export default BaseCitiesContainer

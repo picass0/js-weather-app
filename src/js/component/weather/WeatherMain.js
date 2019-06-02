@@ -1,11 +1,13 @@
 /**
  * aggregates weather handling logic for convenience
  */
-import Component from "./Component";
-import WeatherView from "./WeatherView";
-import WheelPlaceholder from "./WheelPlaceholder";
+import Component from "../Component";
+import WeatherView from "./view/WeatherView";
+import WheelPlaceholder from "../wheel/WheelPlaceholder";
 
-class WeatherComponent extends Component{
+import './WeatherMain.scss';
+
+class WeatherMain extends Component{
 
     /**
      * @param container
@@ -17,6 +19,7 @@ class WeatherComponent extends Component{
         this.weatherView = new WeatherView();
         this.wheel = new WheelPlaceholder();
 
+        this.getDomContainer().classList.add('weather-main');
         this.getDomContainer().appendChild(this.weatherView.getDomContainer());
         this.getDomContainer().appendChild(this.wheel.getDomContainer());
     }
@@ -57,4 +60,4 @@ class WeatherComponent extends Component{
     }
 }
 
-export default WeatherComponent;
+export default WeatherMain;
