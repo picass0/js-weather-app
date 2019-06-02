@@ -88,6 +88,9 @@ dispatcher.subscribe('addCity', newCityName => {
 });
 
 dispatcher.subscribe('clickCity', city => {
+    if (city.getId() === globalState.getActiveCity().getId()) {
+        return;
+    }
     const newState = CitiesStateFactory.setActiveCity(globalState, city);
     dispatcher.publish('displayWeatherForActiveCity', newState);
 });
