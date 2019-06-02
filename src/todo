@@ -1,40 +1,13 @@
-/*
  main todo list:
-
-   - add zeroes to minutes and hours
-   - можга
-   - subfolders for components and group scss with js
-   - styling (and sass + autoprefixers + fonts in webpack config)
-   - wheel styling
-   - do not forget to style falsh component
-   - do not forget to correctly render if there is no city
-   - check in all browsers (ie11)
-   - different component for current day
-   - do not forget to style wheel
-   - dispaly local time
-
-   - import fontawesome locally
-   - do not call changeActiveCity if we clicked on active city
-   - eventdispatcher can publish events without data
-   - citiesState.setActiveCities, cities.removeCity - check if city exists
-   - add readme.md
-   !!! - store lat + lng in city and search in apixu based on lat + lng
-
-
-   - better DailyWeather construction - check if forecast first element is junk before deleting, check that current weather is for current day and not for yesterday
    - hashmap in CityList
+   - extract current-weather component styles
    - toy with async+await
-   - describe json data via json schema
    - read about getters and setters
-   - correct jsdoc
-   - option to add current city
-   - normal exception structure
-
+   - normalize exception structure
+   - autocomplete field for add city form
+   - better DailyWeather construction - check if forecast first element is junk before deleting, check that current weather is for current day and not for yesterday
    - ability to change days at runtime
-   - ability to add current city after user declined to provide geolocation info
-   - autocomplete field for cities
    - add class properties and babel plugin for them
    - read about strict mode and mb use it
-   - CitiesRepository - validation of state in local storage, + keep version of state + describe data sent to data storage
+   - CitiesRepository - validation of state in local storage, + keep version of state + describe data sent to data storage vis json schema
    - avoid full rerender in event handlers in cityList
- */
