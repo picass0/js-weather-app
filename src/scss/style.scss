@@ -251,6 +251,16 @@ body {
   }
 }
 
+.loading-wheel {
+  margin: 0 auto;
+  display: block;
+  width: 2.5rem;
+  height: auto;
+  &__container {
+    margin: 0.5rem 0;
+  }
+}
+
 
 @media (min-width: 40rem) {
   .mobile-cities__container {
