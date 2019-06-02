@@ -43,7 +43,7 @@ class AddCityForm extends Component {
 
         textField.addEventListener('input', () => {
             this.eventDispatcher.publish('textChanged', this.textField.value);
-            this.eventDispatcher.publish('clearValidationErrors', true);
+            this.eventDispatcher.publish('clearValidationErrors');
             this.clearErrors();
         });
 
@@ -53,7 +53,7 @@ class AddCityForm extends Component {
             }
 
             this.textField.value = newValue;
-            this.eventDispatcher.publish('clearValidationErrors', true);
+            this.eventDispatcher.publish('clearValidationErrors');
             this.clearErrors();
         });
 

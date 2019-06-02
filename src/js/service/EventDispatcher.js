@@ -29,7 +29,7 @@ class EventDispatcher {
      * @param {string} eventType
      * @param {Object} data
      */
-    publish (eventType, data) {
+    publish (eventType, data = null) {
         const event = new CustomEvent(eventType, {detail: data});
         this.domElement.dispatchEvent(event);
     }
