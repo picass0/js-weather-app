@@ -1,4 +1,10 @@
+/**
+ * entity holds information about weather
+ */
 class DailyWeather {
+    /**
+     * @param {*} data
+     */
     constructor(data) {
         this.description = data.description;
         this.icon = data.icon;

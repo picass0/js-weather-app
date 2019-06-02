@@ -3,6 +3,9 @@ import CityModel from '../../../entity/City';
 
 import './City.scss';
 
+/**
+ * Component that render single city
+ */
 class City extends Component {
 
     constructor() {
@@ -11,11 +14,10 @@ class City extends Component {
     }
 
     /**
-     *
      * @param {CityModel} cityModel
-     * @param deleteHandler
-     * @param clickHandler
-     * @param isActiveCity
+     * @param {function} deleteHandler
+     * @param {function} clickHandler
+     * @param {boolean} isActiveCity
      */
     render (cityModel, deleteHandler, clickHandler, isActiveCity) {
         this.clear();

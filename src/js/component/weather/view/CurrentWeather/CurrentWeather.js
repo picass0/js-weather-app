@@ -4,11 +4,13 @@ import City from '../../../../entity/City';
 
 import './CurrentWeather.scss';
 
+/**
+ * Component dispalys detailed information about current weather
+ */
 class CurrentWeather extends Component {
 
     /**
-     *
-     * @param city
+     * @param {City} city
      * @param {DailyWeather} dailyWeather
      */
     render (city, dailyWeather) {

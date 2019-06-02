@@ -3,18 +3,21 @@ import cityNameValidator from '../../validator/cityNameValidator';
 import EventDispatcher from "../../service/EventDispatcher";
 import DesktopCities from "./DesktopCities/DesktopCities";
 import MobileCities from "./MobileCities/MobileCities";
+import CitiesState from '../../entity/CitiesState';
+import City from '../../entity/City';
 
 import './CitiesMain.scss';
 
 /**
- * Main CitiesMain component
+ * Main Cities component, wraps all other city list related components,
+ * handles interaction between them and outside
  */
 class CitiesMain extends Component{
 
     /**
      * @param {EventDispatcher} eventDispatcher
      * @param {cityNameValidator} cityNameValidator
-     * @param domContainer
+     * @param {HTMLElement|null} domContainer
      */
     constructor(eventDispatcher, cityNameValidator, domContainer = null) {
         super(domContainer);
@@ -38,9 +41,11 @@ class CitiesMain extends Component{
         this.containers.forEach((container) => {
             this.domContainer.appendChild(container.getDomContainer());
         });
-
     }
 
+    /**
+     * @param {CitiesState} newState
+     */
     render (newState) {
         this.cityBeingAdded = false;
 
@@ -81,7 +86,7 @@ class CitiesMain extends Component{
     }
 
     /**
-     * @param city
+     * @param {City} city
      */
     deleteCityHandlerFactory (city) {
         return () => {
@@ -90,7 +95,7 @@ class CitiesMain extends Component{
     }
 
     /**
-     * @returns {null|string}
+     * @returns {boolean}
      */
     isCityBeingAdded () {
         return this.cityBeingAdded;
@@ -108,6 +113,9 @@ class CitiesMain extends Component{
         }
     }
 
+    /**
+     * @param {string[]} errors
+     */
     displayValidationErrors(errors) {
         this.containers.forEach((container) => {
             container.hideWheel();

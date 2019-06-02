@@ -1,16 +1,28 @@
 import BaseCitiesContainer from "../BaseCitiesContainer";
+import EventDispatcher from '../../../service/EventDispatcher';
+import CitiesState from '../../../entity/CitiesState';
 
 import'./MobileCities.scss';
 import './Backdrop.scss';
 import './ToggleButton.scss';
 
+/**
+ * Component that renders city list for mobile screen width
+ */
 class MobileCities extends BaseCitiesContainer {
 
+    /**
+     * @param {Object} handlerFactories
+     * @param {EventDispatcher} eventDispatcher
+     */
     constructor(handlerFactories, eventDispatcher) {
         super(handlerFactories, eventDispatcher);
         this.domContainer.classList.add('mobile-cities')
     }
 
+    /**
+     * @param {CitiesState} newState
+     */
     render(newState) {
         this.clear();
 

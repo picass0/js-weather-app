@@ -1,18 +1,25 @@
 import {propertyExists} from '../utils/utils';
 import DailyWeather from '../entity/DailyWeather';
+import City from './../entity/City';
 
 /**
  * Provides weather related information
+ * https://www.apixu.com/doc/
  */
 class ApixuWeatherDataProvider {
 
+    /**
+     * @param {string} apiKey
+     */
     constructor(apiKey) {
         this.url = 'https://api.apixu.com/v1/forecast.json';
         this.apiKey = apiKey;
     }
 
     /**
-     * @param {*} city
+     * fetches weather for given city for given days amount
+     *
+     * @param {City} city
      * @param {int} days
      * @returns {Promise}
      */
@@ -33,6 +40,11 @@ class ApixuWeatherDataProvider {
             });
     }
 
+    /**
+     * @param {*} response
+     * @param {DailyWeather|null} firstForecastDay
+     * @returns {DailyWeather}
+     */
     getCurrent(response, firstForecastDay) {
         if (!response.hasOwnProperty('current')) {
             throw {
@@ -87,6 +99,11 @@ class ApixuWeatherDataProvider {
         })
     }
 
+    /**
+     *
+     * @param {*}response
+     * @returns {DailyWeather[]}
+     */
     getForecast(response) {
         if (!propertyExists(response, 'forecast', 'forecastday') ||
             !Array.isArray(response.forecast.forecastday)
@@ -151,9 +168,8 @@ class ApixuWeatherDataProvider {
     }
 
     /**
-     *
-     * @param condition
-     * @returns {*[]}
+     * @param {*} condition
+     * @returns {[string|null, string|null]}
      */
     getIconAndDescription (condition) {
         let description = null;

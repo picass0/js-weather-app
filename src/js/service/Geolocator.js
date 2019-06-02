@@ -1,5 +1,9 @@
 import OpenCageGeocoder from './OpenCageGeocoder';
 
+/**
+ * Allows finding current city for user
+ * works only if user gives consent for geolocation
+ */
 class Geolocator {
     /**
      *
@@ -9,6 +13,9 @@ class Geolocator {
         this.geocoder = geocoder;
     }
 
+    /**
+     * @returns {Promise}
+     */
     findCurrentCity() {
         return new Promise((resolve, reject) => {
             try {
@@ -27,6 +34,9 @@ class Geolocator {
         });
     }
 
+    /**
+     * @param {*} error
+     */
     errorHandler (error) {
         console.error(error)
     }

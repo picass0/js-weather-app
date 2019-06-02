@@ -3,6 +3,10 @@
  */
 class Component {
 
+    /**
+     *
+     * @param {HTMLElement|null} domContainer
+     */
     constructor (domContainer) {
         if (!domContainer) {
             domContainer = document.createElement('div')
@@ -10,6 +14,10 @@ class Component {
         this.domContainer = domContainer;
     }
 
+    /**
+     *
+     * @param {HTMLElement|null} container
+     */
     clear (container = null) {
         if (!container) {
             container = this.domContainer
@@ -20,6 +28,9 @@ class Component {
         }
     }
 
+    /**
+     * @returns {HTMLElement}
+     */
     getDomContainer() {
         return this.domContainer;
     }

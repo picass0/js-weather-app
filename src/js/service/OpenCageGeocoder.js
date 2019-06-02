@@ -1,12 +1,14 @@
 import City from "../entity/City";
 
 /**
+ * Geocoder. Can fetch City info (name,state,country,lat,lng)
+ * based on city name or city location
+ *
  * https://opencagedata.com/api
  */
 class OpenCageGeocoder {
 
     /**
-     *
      * @param {string} apiKey
      */
     constructor (apiKey) {
@@ -32,7 +34,7 @@ class OpenCageGeocoder {
     }
 
     /**
-     * @param query
+     * @param {string} query
      * @returns {Promise}
      */
     createCityQuery(query) {

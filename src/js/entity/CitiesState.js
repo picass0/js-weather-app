@@ -1,4 +1,4 @@
-import City from './City';
+import City from './City'
 
 /**
  * Object holds application state related to cities
@@ -6,17 +6,25 @@ import City from './City';
 class CitiesState {
 
     /**
-     *
+     * @param {City[]} cities
+     * @param {City|null} activeCity
      */
     constructor(cities = [], activeCity = null) {
         this.cities = cities;
         this.activeCity = activeCity;
     }
 
+    /**
+     * @returns {City[]}
+     */
     getCities () {
         return this.cities;
     }
 
+    /**
+     * @param {City} cityToCheck
+     * @returns {boolean}
+     */
     cityExists (cityToCheck) {
         let result = false;
         this.cities.forEach((city) => {
@@ -29,14 +37,14 @@ class CitiesState {
     }
 
     /**
-     * @returns {*}
+     * @returns {City|null}
      */
     getActiveCity () {
         return this.activeCity;
     }
 
     /**
-     * @returns {string}
+     * @returns {Object}
      */
     toJson() {
         return {
@@ -46,7 +54,6 @@ class CitiesState {
     }
 
     /**
-     *
      * @param {CitiesState} citiesState
      * @returns {boolean}
      */

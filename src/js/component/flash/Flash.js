@@ -2,12 +2,15 @@ import Component from '../Component';
 
 import './Flash.scss';
 
+/**
+ * Component for displaying flash messages
+ * for now supports only errors
+ */
 class Flash extends Component{
 
-    constructor () {
-        super();
-    }
-
+    /**
+     * @param {string[]} messages
+     */
     render (messages) {
         this.clear();
 

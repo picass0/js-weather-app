@@ -1,16 +1,30 @@
 import Component from "../../../Component";
 import {getDayShort} from "../../../../utils/utils";
+import EventDispatcher from '../../../../service/EventDispatcher';
+import DailyWeather from '../../../../entity/DailyWeather';
 
 import './WeatherList.scss';
 import './WeatherSummary.scss';
 
+/**
+ * Component contains list of weather summaries for few days
+ */
 class WeatherList extends Component {
+
+    /**
+     * @param {EventDispatcher} eventDispatcher
+     * @param {HTMLElement} domElement
+     */
     constructor (eventDispatcher, domElement) {
         super(domElement);
         this.eventDispatcher = eventDispatcher;
         this.domContainer.classList.add('weather-list');
         this.items = [];
     }
+
+    /**
+     * @param {DailyWeather[]} weatherDataCollection
+     */
     render(weatherDataCollection) {
         this.clear();
 

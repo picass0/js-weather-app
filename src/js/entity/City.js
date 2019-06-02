@@ -1,3 +1,7 @@
+
+/**
+ * Entity holds information about city
+ */
 class City {
 
     /**
@@ -13,6 +17,10 @@ class City {
         this.id = (this.name ? this.name : '') + (this.state ? this.state : '') + (this.country ? this.country : '');
     }
 
+    /**
+     *
+     * @returns {*}
+     */
     toJson () {
         return{
             name: this.name,
@@ -23,30 +31,51 @@ class City {
         };
     }
 
+    /**
+     * @returns {number}
+     */
     getLat () {
         return this.lat;
     }
 
+    /**
+     * @returns {number}
+     */
     getLong () {
         return this.long
     }
 
+    /**
+     * @returns {string}
+     */
     getCountry () {
         return this.country;
     }
 
+    /**
+     * @returns {string|null}
+     */
     getState () {
         return this.state;
     }
 
+    /**
+     * @returns {string|null}
+     */
     getName () {
         return this.name;
     }
 
+    /**
+     * @returns {string}
+     */
     getId() {
         return this.id;
     }
 
+    /**
+     * @returns {string}
+     */
     getNameOrStateIfNotExists() {
         return !!this.name ? this.name : this.state;
     }

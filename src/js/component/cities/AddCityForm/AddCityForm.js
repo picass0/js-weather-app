@@ -9,6 +9,9 @@ import './SubmitButton.scss'
  */
 class AddCityForm extends Component {
 
+    /**
+     * @param eventDispatcher
+     */
     constructor (eventDispatcher) {
         const domContainer = document.createElement('form');
         domContainer.classList.add('add-city-form');
@@ -16,6 +19,9 @@ class AddCityForm extends Component {
         this.eventDispatcher = eventDispatcher;
     }
 
+    /**
+     * @param {function} addCityHanddler
+     */
     render (addCityHanddler) {
 
         const textField = document.createElement('input');
@@ -72,7 +78,6 @@ class AddCityForm extends Component {
     }
 
     /**
-     * displays validation errors
      * @param {string[]} errors
      */
     displayValidationErrors(errors) {

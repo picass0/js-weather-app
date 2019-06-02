@@ -1,12 +1,15 @@
-/**
- * aggregates weather handling logic for convenience
- */
 import Component from "../Component";
 import WeatherView from "./view/WeatherView";
 import WheelPlaceholder from "../wheel/WheelPlaceholder";
+import City from '../../entity/City';
+import DailyWeather from '../../entity/DailyWeather';
 
 import './WeatherMain.scss';
 
+/**
+ * main weather related component combines data fetching services
+ * and weather displaying components
+ */
 class WeatherMain extends Component{
 
     /**
@@ -25,11 +28,11 @@ class WeatherMain extends Component{
     }
 
     /**
-     * @param {*} city
+     * @param {City} city
      * @param {int} days
-     * @param {Array} weatherList
+     * @param {DailyWeather[]} weatherListCache
      */
-    render(city, days, weatherList = null) {
+    render(city, days, weatherListCache = null) {
         if (!city) {
             return new Promise((resolve, reject) => {
                 this.weatherView.render(city, []);
@@ -37,9 +40,9 @@ class WeatherMain extends Component{
             });
         }
 
-        if (weatherList) {
+        if (weatherListCache) {
             return new Promise((resolve, reject) => {
-                this.weatherView.render(city, weatherList);
+                this.weatherView.render(city, weatherListCache);
                 resolve([]);
             });
         }

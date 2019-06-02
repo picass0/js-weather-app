@@ -1,6 +1,10 @@
 import CitiesState from '../entity/CitiesState';
 import CitiesStateFactory from './CitiesStateFactory';
 
+/**
+ * fetches CitiesState from localStorage
+ * and saves CityState to localStorage
+ */
 class CitiesRepository {
 
     /**
@@ -18,6 +22,9 @@ class CitiesRepository {
         return CitiesStateFactory.createFromRawJson(parsedJson);
     }
 
+    /**
+     * @param {CitiesState} state
+     */
     persisState(state) {
         const json = state.toJson();
         localStorage.setItem('CitiesState', JSON.stringify(json));

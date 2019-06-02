@@ -2,8 +2,13 @@ import Component from '../../Component';
 import CurrentWeather from "./CurrentWeather/CurrentWeather";
 import WeatherList from "./WeatherList/WeatherList";
 import EventDispatcher from "../../../service/EventDispatcher";
+import City from '../../../entity/City';
+import DailyWeather from '../../../entity/DailyWeather';
 
-
+/**
+ * Component wraps all weather displaiyng logic
+ * and handles interaction between weather dispalying components
+ */
 class WeatherView extends Component{
 
     constructor () {
@@ -11,6 +16,11 @@ class WeatherView extends Component{
         this.localDispatcher = new EventDispatcher(this.domContainer);
     }
 
+    /**
+     *
+     * @param {City} city
+     * @param {DailyWeather[]} weatherDataCollection
+     */
     render(city, weatherDataCollection) {
         this.clear();
 

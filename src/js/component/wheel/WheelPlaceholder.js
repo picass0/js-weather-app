@@ -3,12 +3,16 @@ import wheelUrl from '../../../assets/loading-wheel.gif';
 
 import './WheelPlaceholder.scss';
 
+/**
+ * component for dispalying loading wheel
+ */
 class WheelPlaceholder extends Component{
 
     constructor () {
         super();
         this.domContainer.classList.add('wheel-placeholder__container');
     }
+
 
     render() {
         this.clear();

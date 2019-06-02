@@ -1,3 +1,6 @@
+/**
+ * adds CustomeEvent object to Window if not already exists
+ */
 if ( typeof window.CustomEvent === "function" ) {
     const CustomEvent = window.CustomEvent;
 } else {
