@@ -1,5 +1,5 @@
 import Component from "./Component";
-import {getDay} from "../utils/utils";
+import {addLeadingZeroForTime, getDay} from "../utils/utils";
 
 class CurrentWeather extends Component {
 
@@ -25,7 +25,7 @@ class CurrentWeather extends Component {
 
         if (dailyWeather.time) {
             const time = document.createElement('span');
-            time.textContent = ` ${dailyWeather.time.getHours()}:${dailyWeather.time.getMinutes()}`;
+            time.textContent = ` ${addLeadingZeroForTime(dailyWeather.time.getHours())}:${addLeadingZeroForTime(dailyWeather.time.getMinutes())}`;
             dateContainer.appendChild(time);
         }
         this.domContainer.appendChild(dateContainer);

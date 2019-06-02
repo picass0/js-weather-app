@@ -17,3 +17,7 @@ export function getDayShort (date) {
     const days = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
     return days[ date.getDay()];
 }
+
+export function addLeadingZeroForTime($value) {
+    return ($value < 10 ? '0' : '') + $value;
+}
