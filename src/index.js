@@ -66,7 +66,7 @@ const weatherComponent = new WeatherMain(
     weatherComponentDomContainer,
     new ApixuWeatherDataProvider(parameters.apixuApiKey),
 );
-weatherComponent.render(globalState.getActiveCity(), parameters.days);
+weatherComponent.render(globalState.getActiveCity(), days);
 
 const flashComponent = new Flash();
 const flashComponentDomContainer = document.body;
