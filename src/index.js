@@ -15,6 +15,7 @@ import Flash from './js/component/flash/Flash';
 import CitiesStateFactory from './js/service/CitiesStateFactory';
 import City from "./js/entity/City";
 
+const days = 4;
 
 //initializing services
 const dispatcher = new EventDispatcher(document.body);
@@ -24,7 +25,14 @@ const geocoder = new OpenCageGeocoder(parameters.openCageGeocoderApiKey);
 //initializing state
 let globalState = citiesRepo.fetchState();
 if (!globalState) {
-    const defaultCity = new City(parameters.defaultCity);
+    const defaultCity = new City({
+        name: "Москва",
+        state: "Москва",
+        country: "РФ",
+        lat: 55.7504461,
+        lng: 37.6174943
+    });
+
     globalState = new CitiesState([defaultCity], defaultCity, defaultCity);
     const geolocator = new Geolocator(geocoder);
 
@@ -115,7 +123,7 @@ dispatcher.subscribe('displayWeatherForActiveCity', state => {
     if (activeCity && weatherDataForCities[activeCity.getId()]) {
         weatherList = weatherDataForCities[activeCity.getId()];
     }
-    weatherComponent.render(activeCity, parameters.days, weatherList)
+    weatherComponent.render(activeCity, days, weatherList)
         .then((weatherList) => {
             dispatcher.publish('weatherForCityDisplayed', {citiesState: state, weatherList: weatherList});
         })
