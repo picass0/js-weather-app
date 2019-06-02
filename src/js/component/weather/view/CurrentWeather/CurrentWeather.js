@@ -67,8 +67,9 @@ class CurrentWeather extends Component {
         weatherRight.classList.add('current-weather__right');
 
         if (dailyWeather.hasOwnProperty('precipitation')) {
+            const textContent = dailyWeather.precipitation === 0 ? 'Без осадков' : `Осадки: ${dailyWeather.precipitation}мм`
             const precipitation = document.createElement('div');
-            precipitation.textContent = `Осадки: ${dailyWeather.precipitation}мм`;
+            precipitation.textContent = textContent;
             precipitation.classList.add('current-weather__line');
             weatherRight.appendChild(precipitation);
         }
