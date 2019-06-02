@@ -1,6 +1,13 @@
 import Component from '../Component';
 
-class FlashComponent extends Component{
+import './Flash.scss';
+
+class Flash extends Component{
+
+    constructor () {
+        super();
+        this.domContainer.classList.add('flash');
+    }
 
     render (messages) {
         this.clear();
@@ -8,7 +15,7 @@ class FlashComponent extends Component{
         messages.forEach((message) => {
             const p = document.createElement('p');
             p.textContent = message;
-            p.style.color = 'red';
+            p.classList.add('flash__item');
             this.domContainer.appendChild(p);
         });
 
@@ -20,4 +27,4 @@ class FlashComponent extends Component{
     }
 }
 
-export default FlashComponent;
+export default Flash;

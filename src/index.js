@@ -11,7 +11,7 @@ import parameters from './parameters.json';
 import CitiesState from './js/entity/CitiesState';
 import Geolocator from './js/service/Geolocator';
 import OpenCageGeocoder from './js/service/OpenCageGeocoder';
-import FlashComponent from './js/component/flash/FlashComponent';
+import Flash from './js/component/flash/Flash';
 import CitiesStateFactory from './js/service/CitiesStateFactory';
 import City from "./js/entity/City";
 
@@ -60,7 +60,7 @@ const weatherComponent = new WeatherMain(
 );
 weatherComponent.render(globalState.getActiveCity(), parameters.days);
 
-const flashComponent = new FlashComponent();
+const flashComponent = new Flash();
 const flashComponentDomContainer = document.body;
 flashComponentDomContainer.appendChild(flashComponent.getDomContainer());
 
