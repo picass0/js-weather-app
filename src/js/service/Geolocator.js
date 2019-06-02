@@ -1,6 +1,6 @@
 import OpenCageGeocoder from './OpenCageGeocoder';
 
-class CityFinder {
+class Geolocator {
     /**
      *
      * @param {OpenCageGeocoder} geocoder
@@ -32,4 +32,4 @@ class CityFinder {
     }
 }
 
-export default CityFinder;
+export default Geolocator;

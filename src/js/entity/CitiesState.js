@@ -8,10 +8,9 @@ class CitiesState {
     /**
      *
      */
-    constructor(cities = [], activeCity = null, defaultCity = null) {
+    constructor(cities = [], activeCity = null) {
         this.cities = cities;
         this.activeCity = activeCity;
-        this.defaultCity = defaultCity;
     }
 
     getCities () {
@@ -27,13 +26,6 @@ class CitiesState {
         });
 
         return result;
-    }
-
-    /*
-     * @returns {City}
-     */
-    getDefaultCity () {
-        return this.defaultCity;
     }
 
     /**
@@ -70,10 +62,6 @@ class CitiesState {
         const passedActiveCityId = citiesState.getActiveCity() ? citiesState.getActiveCity().getId() : null;
 
         if (thisActiveCityId !== passedActiveCityId) {
-            return false;
-        }
-
-        if (this.getDefaultCity().getId() !== citiesState.getDefaultCity().getId()) {
             return false;
         }
 

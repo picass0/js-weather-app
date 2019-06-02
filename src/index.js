@@ -9,7 +9,7 @@ import CityList from "./js/component/CityList";
 import cityNameValidator from './js/validator/cityNameValidator';
 import parameters from './parameters.json';
 import CitiesState from './js/entity/CitiesState';
-import CityFinder from './js/service/CityFinder';
+import Geolocator from './js/service/Geolocator';
 import OpenCageGeocoder from './js/service/OpenCageGeocoder';
 import FlashComponent from './js/component/FlashComponent';
 import CitiesStateFactory from './js/service/CitiesStateFactory';
@@ -26,28 +26,23 @@ let globalState = citiesRepo.fetchState();
 if (!globalState) {
     const defaultCity = new City(parameters.defaultCity);
     globalState = new CitiesState([defaultCity], defaultCity, defaultCity);
-    const cityFinder = new CityFinder(geocoder);
+    const geolocator = new Geolocator(geocoder);
 
-    cityFinder.findCurrentCity()
+    geolocator.findCurrentCity()
         .then((city) => {
+            if (globalState.cityExists(city)) {
+                return;
+            }
+
             let state = globalState;
-            const defaultCity = globalState.getDefaultCity();
-            if (defaultCity) {
+            if (state.cityExists(defaultCity)) {
                 state = CitiesStateFactory.removeCity(state, defaultCity);
             }
 
-            let activeCityChanged = false;
-            if (state.getActiveCity() === null) {
-                activeCityChanged = true
-            }
-
-            const newState = CitiesStateFactory.addCity(state, city, false);
+            const newState = CitiesStateFactory.addCity(state, city, true);
 
             dispatcher.publish('stateChanged', newState);
-
-            if (activeCityChanged) {
-                dispatcher.publish('displayWeatherForActiveCity', newState);
-            }
+            dispatcher.publish('displayWeatherForActiveCity', newState);
         });
 }
 const weatherDataForCities = {};

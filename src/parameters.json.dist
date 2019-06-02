@@ -4,6 +4,8 @@
   "defaultCity": {
     "name": "Москва",
     "state": "Москва",
-    "country": "РФ"
+    "country": "РФ",
+    "lat": 55.7504461,
+    "lng": 37.6174943
   }
 }

@@ -16,7 +16,12 @@ class CitiesStateFactory {
             });
         }
 
-        return new CitiesState(cities, activeCity);
+        let defaultCity = null;
+        if (rawJsonData.defaultCity) {
+            defaultCity = new City(rawJsonData.defaultCity);
+        }
+
+        return new CitiesState(cities, activeCity, defaultCity);
     }
 
 
