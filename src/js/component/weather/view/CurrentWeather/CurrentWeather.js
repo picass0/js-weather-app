@@ -1,5 +1,6 @@
 import Component from "../../../Component";
 import {addLeadingZeroForTime, getDay} from "../../../../utils/utils";
+import City from '../../../../entity/City';
 
 import './CurrentWeather.scss';
 
@@ -15,7 +16,7 @@ class CurrentWeather extends Component {
 
         const header = document.createElement('h3');
         header.classList.add('current-weather__header', 'current-weather__line');
-        header.textContent = `${city.getNameOrStateIfNotExists()}, ${city.getCountry()}`;
+        header.textContent = this.getHeaderText(city);
         this.domContainer.appendChild(header);
 
         const dateContainer = document.createElement('div');
@@ -90,6 +91,29 @@ class CurrentWeather extends Component {
         mainPart.appendChild(weatherRight);
 
         this.domContainer.appendChild(mainPart);
+    }
+
+    /**
+     *
+     * @param {City} city
+     * @returns {string}
+     */
+    getHeaderText(city) {
+        const cityData = [city.getName(), city.getState(), city.getCountry()];
+        const result = [];
+        let i = 0;
+        while (i < 2) {
+            if (cityData[i] &&
+                (!cityData[i-1] || cityData[i-1] !== cityData[i])
+            ) {
+                result.push(cityData[i]);
+            }
+
+            i++;
+        }
+
+
+        return result.join(', ');
     }
 }
 
