@@ -1,4 +1,5 @@
 import Component from './Component';
+import wheelUrl from '../../assets/loading-wheel.gif';
 
 class WheelPlaceholder extends Component{
 
@@ -12,7 +13,7 @@ class WheelPlaceholder extends Component{
 
         const wheel = document.createElement('img');
         wheel.classList.add('loading-wheel');
-        wheel.setAttribute('src', '/assets/loading-wheel.gif');
+        wheel.setAttribute('src', wheelUrl);
 
         this.domContainer.appendChild(wheel);
     }

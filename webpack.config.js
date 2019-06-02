@@ -26,6 +26,26 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
+            },
+            {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'fonts/'
+                    }
+                }]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'img/'
+                    }
+                }]
             }
         ]
     },
@@ -41,7 +61,7 @@ module.exports = {
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin ([
             {from: './src/index.html', to: './index.html'},
-            {from: './src/assets', to: './assets'}
+            {from: './src/assets/favicon.png', to: './assets'}
         ])
     ]
 };
