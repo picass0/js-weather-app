@@ -52,6 +52,8 @@ module.exports = {
 
     devServer: {
         contentBase: './dist',
+        disableHostCheck: true,
+        headers: { 'Access-Control-Allow-Origin': '*' }
     },
     output: {
         filename: "main.js",
