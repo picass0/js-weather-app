@@ -38,7 +38,7 @@ class OpenCageGeocoder {
      * @returns {Promise}
      */
     createCityQuery(query) {
-        const url = `${this.url}?q=${query}&key=${this.apiKey}&language=ru`;
+        const url = `${this.url}?q=${encodeURI(query)}&key=${this.apiKey}&language=ru`;
         return fetch(url)
             .then((response) => {
                 if (!response.ok) {

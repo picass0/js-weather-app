@@ -24,7 +24,8 @@ class ApixuWeatherDataProvider {
      * @returns {Promise}
      */
     getDataForCity(city, days) {
-        const url = `${this.url}?key=${this.apiKey}&q=${city.getLat()}, ${city.getLong()}&days=${days}&lang=ru`;
+        const query = encodeURI(`${city.getLat()}, ${city.getLong()}`);
+        const url = `${this.url}?key=${this.apiKey}&q=${query}&days=${days}&lang=ru`;
         return fetch(url)
             .then(response => {
                 if (!response.ok) {
@@ -60,7 +61,13 @@ class ApixuWeatherDataProvider {
             }
         }
 
-        const date = new Date(response.location.localtime);
+        const date = this.parseDateTime(response.location.localtime);
+        if (!date) {
+            throw {
+                msg: "cannot display weather data, undexpected response format, cannot parse 'location.localtime' parameter in response",
+                response: response
+            }
+        }
 
         const current = response.current;
 
@@ -180,6 +187,29 @@ class ApixuWeatherDataProvider {
         }
 
         return [description, icon];
+    }
+
+    /**
+     * parses date in following format:
+     * YYYY-MM-DD HH:mm
+     * if hour is less then 10 ,then only one hour digit will be present
+     *
+     * @param localtime
+     * @returns {null|Date}
+     */
+    parseDateTime(localtime) {
+        const timeParts = /(\d{4})-(\d{2})-(\d{2}) (\d{1,2}):(\d{1,2})/.exec(localtime);
+        if (!timeParts || timeParts.length !== 6) {
+            return null;
+        }
+
+        return new Date(
+            parseInt(timeParts[1]),
+            (parseInt(timeParts[2]) - 1),
+            parseInt(timeParts[3]),
+            parseInt(timeParts[4]),
+            parseInt(timeParts[5])
+        );
     }
 }
 
