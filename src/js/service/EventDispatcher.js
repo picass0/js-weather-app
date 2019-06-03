@@ -1,4 +1,4 @@
-import CustomEvent from '../polyfill/CustomEvent';
+import '../polyfill/CustomEvent';
 
 /**
  * Simple wrapper around DOM element

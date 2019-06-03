@@ -30,7 +30,8 @@ class WeatherList extends Component {
 
         weatherDataCollection.forEach((weatherData) => {
             const container = document.createElement('div');
-            container.classList.add('weather-summary', 'weather-list__item');
+            container.classList.add('weather-summary');
+            container.classList.add('weather-list__item');
 
 
             let el = document.createElement('div');

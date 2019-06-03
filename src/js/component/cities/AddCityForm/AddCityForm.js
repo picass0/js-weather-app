@@ -25,7 +25,8 @@ class AddCityForm extends Component {
     render (addCityHanddler) {
 
         const textField = document.createElement('input');
-        textField.classList.add('form-text-field', 'add-city-form__item');
+        textField.classList.add('form-text-field');
+        textField.classList.add('add-city-form__item');
         textField.setAttribute('type', 'text');
         textField.setAttribute('placeholder', 'Название города');
         this.domContainer.appendChild(textField);
@@ -33,12 +34,14 @@ class AddCityForm extends Component {
 
         const errorBox = document.createElement('ul');
         errorBox.style.display = 'none';
-        errorBox.classList.add('add-city-form__error-box', 'add-city-form__item');
+        errorBox.classList.add('add-city-form__error-box');
+        errorBox.classList.add('add-city-form__item');
         this.domContainer.appendChild(errorBox);
         this.errorBox = errorBox;
 
         const addCityButton = document.createElement('button');
-        addCityButton.classList.add('submit-button', 'add-city-form__item');
+        addCityButton.classList.add('submit-button');
+        addCityButton.classList.add('add-city-form__item');
         addCityButton.textContent = 'Добавить';
         this.domContainer.appendChild(addCityButton);
 

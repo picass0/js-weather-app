@@ -49,7 +49,9 @@ class City extends Component {
         }
 
         const deleteButton = document.createElement('button');
-        deleteButton.classList.add('city__delete', 'far', 'fa-times-circle');
+        deleteButton.classList.add('city__delete');
+        deleteButton.classList.add('far');
+        deleteButton.classList.add('fa-times-circle');
         deleteButton.addEventListener('click', (e) => {
             e.stopPropagation();
             deleteHandler(e)
