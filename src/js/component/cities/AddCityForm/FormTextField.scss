@@ -15,4 +15,9 @@
     box-shadow: 0 0 0 0.2rem lighten($main-color, 40%);
     border-color: $main-color;
   }
+
+  //ie specific
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    padding: 0.4rem 0.5rem 0.6rem 0.5rem;
+  }
 }
