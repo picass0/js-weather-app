@@ -22,20 +22,6 @@ class CurrentWeather extends Component {
         header.textContent = this.getHeaderText(city);
         this.domContainer.appendChild(header);
 
-        const dateContainer = document.createElement('div');
-        dateContainer.classList.add('current-weather__line');
-
-        const day = document.createElement('span');
-        day.textContent = getDay(dailyWeather.date);
-        dateContainer.appendChild(day);
-
-        if (dailyWeather.time) {
-            const time = document.createElement('span');
-            time.textContent = ` ${addLeadingZeroForTime(dailyWeather.time.getHours())}:${addLeadingZeroForTime(dailyWeather.time.getMinutes())}`;
-            dateContainer.appendChild(time);
-        }
-        this.domContainer.appendChild(dateContainer);
-
         const description = document.createElement('div');
         description.textContent = dailyWeather.description;
         description.classList.add('current-weather__line');
