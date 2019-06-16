@@ -22,6 +22,14 @@ class CurrentWeather extends Component {
         header.textContent = this.getHeaderText(city);
         this.domContainer.appendChild(header);
 
+        const dateContainer = document.createElement('div');
+        dateContainer.classList.add('current-weather__line');
+
+        const day = document.createElement('span');
+        day.textContent = getDay(dailyWeather.date);
+        dateContainer.appendChild(day);
+        this.domContainer.appendChild(dateContainer);
+
         const description = document.createElement('div');
         description.textContent = dailyWeather.description;
         description.classList.add('current-weather__line');
