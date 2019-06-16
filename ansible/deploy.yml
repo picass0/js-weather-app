@@ -1,0 +1,107 @@
+---
+  - name: Build source code for deployment
+    hosts: control
+    gather_facts: false
+    tasks:
+      - name: Run npm install
+        command: npm install
+        args:
+          chdir: ../
+
+      - name: Run npm run build
+        command: npm run build
+        args:
+          chdir: ../
+
+      - name: create archive
+        archive:
+          path: ../dist/*
+          dest: ../build.tgz
+
+  - name: Configure webserver and deploy archive with site content
+    hosts: webserver
+    gather_facts: false
+    tasks:
+      - name: Update apt
+        apt: update_cache=yes
+        become: True
+
+      - name: add certbot apt repos
+        apt_repository:
+          repo: "{{ item }}"
+          state: present
+        loop:
+          - deb http://archive.ubuntu.com/ubuntu/ bionic universe
+          - deb http://archive.ubuntu.com/ubuntu/ bionic-updates universe
+          - deb http://security.ubuntu.com/ubuntu/ bionic-security universe
+          - ppa:certbot/certbot
+        become: True
+
+      - name: Install nginx and certbot
+        apt: name="{{ item }}" state=latest
+        become: True
+        loop:
+          - nginx
+          - certbot
+          - python-certbot-nginx
+
+      - name: remove /var/www/js-weather-app directory
+        file:
+          path: /var/www/js-weather-app
+          state: absent
+        become: True
+
+      - name: create /var/www/js-weather-app directory
+        file:
+          path: /var/www/js-weather-app
+          state: directory
+          mode: '0755'
+          owner: www-data
+          group: www-data
+        become: True
+
+      - name: Extract built Archive into /var/www/js-weather-app directory
+        unarchive:
+          src: ../build.tgz
+          dest: /var/www/js-weather-app
+        become: True
+
+      - name: Give ownership to www-data
+        file:
+          path: /var/www/js-weather-app
+          mode: '0755'
+          owner: www-data
+          group: www-data
+          recurse: yes
+        become: True
+
+      - name: Upload Nginx config
+        copy:
+          src: ./config/js-weather-app.conf
+          dest: /etc/nginx/sites-available/js-weather-app.conf
+        become: True
+
+      - name: Create symlink for nginx config
+        file:
+          src: /etc/nginx/sites-available/js-weather-app.conf
+          dest: /etc/nginx/sites-enabled/js-weather-app.conf
+          state: link
+        become: True
+
+      - name: UFW - Allow Nginx
+        ufw:
+          rule: allow
+          name: Nginx Full
+        become: True
+
+      - name: remove default nginx site
+        file:
+          path: /etc/nginx/sites-enabled/default
+          state: absent
+        become: True
+
+      - name: restart nginx
+        service:
+          name: nginx
+          state: restarted
+        become: True

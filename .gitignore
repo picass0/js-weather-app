@@ -3,3 +3,5 @@ node_modules
 dist
 npm-debug.log
 parameters.json
+ansible/*.retry
+build.tgz
