@@ -47,3 +47,64 @@ export function getDayShort (date) {
 export function addLeadingZeroForTime($value) {
     return ($value < 10 ? '0' : '') + $value;
 }
+
+/**
+ * @param arg1
+ * @param arg2
+ * @param {function} callback
+ * @returns {*}
+ */
+export function executeCallbackIfBothArgsNotNull(arg1, arg2, callback) {
+    if (arg1 === null && arg2 === null) {
+        return null;
+    }
+
+    if (arg1 === null) {
+        return arg2;
+    }
+
+    if (arg2 === null) {
+        return arg1;
+    }
+
+    return callback(arg1, arg2);
+}
+
+/**
+ * @param value1
+ * @param value2
+ * @returns {*}
+ */
+export function lowest(value1, value2) {
+    return executeCallbackIfBothArgsNotNull(
+        value1,
+        value2,
+        (value1, value2) => (value1 < value2 ? value1 : value2)
+    );
+}
+
+/**
+ * @param value1
+ * @param value2
+ * @returns {*}
+ */
+export function sum(value1, value2) {
+    return executeCallbackIfBothArgsNotNull(
+        value1,
+        value2,
+        (value1, value2) => (value1 + value2)
+    );
+}
+
+/**
+ * @param value1
+ * @param value2
+ * @returns {*}
+ */
+export function average(value1, value2) {
+    return executeCallbackIfBothArgsNotNull(
+        value1,
+        value2,
+        (value1, value2) => ((value1 + value2)/2)
+    );
+}

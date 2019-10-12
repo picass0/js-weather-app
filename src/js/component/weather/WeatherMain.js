@@ -7,14 +7,14 @@ import DailyWeather from '../../entity/DailyWeather';
 import './WeatherMain.scss';
 
 /**
- * main weather related component combines data fetching services
- * and weather displaying components
+ * Main weather related component.
+ * Combines data fetching services and weather displaying components
  */
 class WeatherMain extends Component{
 
     /**
      * @param container
-     * @param {ApixuWeatherDataProvider} weatherDataProvider
+     * @param {OpenWeatherDataProvider} weatherDataProvider
      */
     constructor (container, weatherDataProvider) {
         super(container);

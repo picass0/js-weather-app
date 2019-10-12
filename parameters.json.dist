@@ -1,4 +1,4 @@
 {
-  "apixuApiKey": "key",
+  "openWeatherApiKey": "key",
   "openCageGeocoderApiKey": "key"
 }

@@ -3,7 +3,6 @@ import 'whatwg-fetch';
 import './global-assets';
 import EventDispatcher from './js/service/EventDispatcher';
 import CitiesRepository from './js/service/CitiesRepository';
-import ApixuWeatherDataProvider from './js/service/ApixuWeatherDataProvider';
 import WeatherMain from './js/component/weather/WeatherMain';
 import CitiesMain from "./js/component/cities/CitiesMain";
 import cityNameValidator from './js/validator/cityNameValidator';
@@ -14,6 +13,7 @@ import OpenCageGeocoder from './js/service/OpenCageGeocoder';
 import Flash from './js/component/flash/Flash';
 import CitiesStateFactory from './js/service/CitiesStateFactory';
 import City from "./js/entity/City";
+import OpenWeatherDataProvider from "./js/service/OpenWeatherDataProvider";
 
 const days = 4;
 
@@ -30,7 +30,7 @@ if (!globalState) {
         state: "Москва",
         country: "РФ",
         lat: 55.7504461,
-        lng: 37.6174943
+        long: 37.6174943
     });
 
     globalState = new CitiesState([defaultCity], defaultCity);
@@ -64,7 +64,7 @@ mainCitiesComponent.render(globalState);
 const weatherComponentDomContainer = document.querySelector('#weather');
 const weatherComponent = new WeatherMain(
     weatherComponentDomContainer,
-    new ApixuWeatherDataProvider(parameters.apixuApiKey),
+    new OpenWeatherDataProvider(parameters.openWeatherApiKey),
 );
 weatherComponent.render(globalState.getActiveCity(), days);
 

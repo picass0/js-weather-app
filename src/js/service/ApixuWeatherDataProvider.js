@@ -3,6 +3,12 @@ import DailyWeather from '../entity/DailyWeather';
 import City from './../entity/City';
 
 /**
+ * Apixu changed the name to https://weatherstack.com/
+ * with this change forecast data became a paid service :(
+ * so i changed weather data provider to https://openweathermap.org/api
+ *
+ * This class is not used anymore!
+ *
  * Provides weather related information
  * https://www.apixu.com/doc/
  */

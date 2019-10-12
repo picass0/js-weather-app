@@ -64,7 +64,7 @@ class CurrentWeather extends Component {
         weatherRight.classList.add('current-weather__right');
 
         if (dailyWeather.hasOwnProperty('precipitation')) {
-            const textContent = dailyWeather.precipitation === 0 ? 'Без осадков' : `Осадки: ${dailyWeather.precipitation}мм`;
+            const textContent = dailyWeather.precipitation === 0 ? 'Без осадков' : `Осадки: ${dailyWeather.precipitation.toFixed(2)}мм`;
             const precipitation = document.createElement('div');
             precipitation.textContent = textContent;
             precipitation.classList.add('current-weather__line');
@@ -73,7 +73,7 @@ class CurrentWeather extends Component {
 
         if (dailyWeather.hasOwnProperty('humidity')) {
             const humidity = document.createElement('div');
-            humidity.textContent = `Влажность: ${dailyWeather.humidity}%`;
+            humidity.textContent = `Влажность: ${dailyWeather.humidity.toFixed(2)}%`;
             humidity.classList.add('current-weather__line');
             weatherRight.appendChild(humidity);
         }
