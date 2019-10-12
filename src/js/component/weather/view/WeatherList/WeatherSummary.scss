@@ -19,6 +19,6 @@
   }
 
   &:hover, &:focus, &--active {
-    background: $active-and-hover-color;
+    background: lighten($active-and-hover-color, 3%);
   }
 }
