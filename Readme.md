@@ -38,9 +38,3 @@ npm install
 npm run build
 ```
 билд сложится в папку dist в корне проекта
-
-
-### Url:
-<https://weather-for-city.tk/>
-
-Пришлось настраивать https, чтобы браузеры не ругались на геолокацию
